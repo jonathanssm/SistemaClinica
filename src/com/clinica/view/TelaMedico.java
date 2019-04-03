@@ -35,27 +35,33 @@ public class TelaMedico extends javax.swing.JFrame {
         CosultarFicha = new javax.swing.JButton();
         AbrirFechar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(102, 153, 255));
+        jPanel1.setBackground(new java.awt.Color(102, 204, 255));
 
         VisualisarAgenda.setBackground(new java.awt.Color(255, 255, 255));
         VisualisarAgenda.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         VisualisarAgenda.setText("Visualisar Agenda ");
         VisualisarAgenda.setActionCommand("");
 
+        CadastrarFicha.setBackground(new java.awt.Color(255, 255, 255));
         CadastrarFicha.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         CadastrarFicha.setText("Cadastrar Ficha");
 
+        Sair.setBackground(new java.awt.Color(255, 255, 255));
         Sair.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         Sair.setText("Sair");
 
+        CadastrarAgenda.setBackground(new java.awt.Color(255, 255, 255));
         CadastrarAgenda.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         CadastrarAgenda.setText("Cadastrar Agenda");
 
+        CosultarFicha.setBackground(new java.awt.Color(255, 255, 255));
         CosultarFicha.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         CosultarFicha.setText("Consultar Fcha");
 
+        AbrirFechar.setBackground(new java.awt.Color(255, 255, 255));
         AbrirFechar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         AbrirFechar.setText("Abrir/Fechar Consulta");
 
@@ -107,6 +113,7 @@ public class TelaMedico extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**

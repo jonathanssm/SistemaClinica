@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package telaatendente;
+package com.clinica.view;
 
 /**
  *
@@ -12,7 +12,7 @@ package telaatendente;
 public class TelaAtendente extends javax.swing.JFrame {
 
     /**
-     * Creates new form tela
+     * Creates new form TelaAtendente
      */
     public TelaAtendente() {
         initComponents();
@@ -27,54 +27,54 @@ public class TelaAtendente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jToggleButton3 = new javax.swing.JToggleButton();
         jPanel1 = new javax.swing.JPanel();
-        Cancelar = new javax.swing.JToggleButton();
-        AgendaMedico = new javax.swing.JToggleButton();
         CadastrarPaciente = new javax.swing.JToggleButton();
+        AgendaMedico = new javax.swing.JToggleButton();
+        Sair = new javax.swing.JToggleButton();
 
-        jToggleButton3.setText("jToggleButton3");
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jPanel1.setBackground(new java.awt.Color(102, 204, 255));
 
-        jPanel1.setBackground(new java.awt.Color(102, 153, 255));
+        CadastrarPaciente.setBackground(new java.awt.Color(255, 255, 255));
+        CadastrarPaciente.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        CadastrarPaciente.setText("Cadastar Paciente");
 
-        Cancelar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        Cancelar.setText("Cancelar");
-
-        AgendaMedico.setBackground(new java.awt.Color(102, 102, 102));
+        AgendaMedico.setBackground(new java.awt.Color(255, 255, 255));
         AgendaMedico.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         AgendaMedico.setText("Agenda Medica");
 
-        CadastrarPaciente.setBackground(new java.awt.Color(51, 153, 255));
-        CadastrarPaciente.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        CadastrarPaciente.setText("Cadastar Paciente");
+        Sair.setBackground(new java.awt.Color(255, 255, 255));
+        Sair.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        Sair.setText("Sair");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(54, 54, 54)
-                .addComponent(CadastrarPaciente)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addComponent(AgendaMedico)
-                .addGap(80, 80, 80))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(186, 186, 186)
-                .addComponent(Cancelar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(CadastrarPaciente)
+                        .addGap(35, 35, 35)
+                        .addComponent(AgendaMedico))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(161, 161, 161)
+                        .addComponent(Sair)))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(88, 88, 88)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(AgendaMedico, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
-                    .addComponent(CadastrarPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(Cancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(125, Short.MAX_VALUE))
+                .addGap(77, 77, 77)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CadastrarPaciente, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(AgendaMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(63, 63, 63)
+                .addComponent(Sair, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -85,10 +85,11 @@ public class TelaAtendente extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -117,10 +118,9 @@ public class TelaAtendente extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(TelaAtendente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        //</editor-fold>
 
         /* Create and display the form */
-     CadastrarPacienteentQueue.invokeLater(new Runnable() {
+        java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new TelaAtendente().setVisible(true);
             }
@@ -130,8 +130,7 @@ public class TelaAtendente extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton AgendaMedico;
     private javax.swing.JToggleButton CadastrarPaciente;
-    private javax.swing.JToggleButton Cancelar;
+    private javax.swing.JToggleButton Sair;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JToggleButton jToggleButton3;
     // End of variables declaration//GEN-END:variables
 }
