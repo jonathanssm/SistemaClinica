@@ -14,6 +14,9 @@ public class TelaAtendente extends javax.swing.JFrame {
     /**
      * Creates new form TelaAtendente
      */
+    
+    private LoginUI l;
+    
     public TelaAtendente() {
         initComponents();
     }
@@ -48,6 +51,11 @@ public class TelaAtendente extends javax.swing.JFrame {
         Sair.setBackground(new java.awt.Color(255, 255, 255));
         Sair.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         Sair.setText("Sair");
+        Sair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SairActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -91,6 +99,12 @@ public class TelaAtendente extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void SairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SairActionPerformed
+        l = new LoginUI();
+        l.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_SairActionPerformed
 
     /**
      * @param args the command line arguments

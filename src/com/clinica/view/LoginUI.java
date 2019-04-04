@@ -5,6 +5,12 @@
  */
 package com.clinica.view;
 
+import com.clinica.controller.LoginCTRL;
+import com.clinica.dal.LoginDAL;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Jonathan
@@ -14,6 +20,14 @@ public class LoginUI extends javax.swing.JFrame {
     /**
      * Creates new form LoginUI
      */
+    
+    private LoginCTRL l;
+    
+    private GerenteUI g = new GerenteUI();
+    private TelaMedico m = new TelaMedico();
+    private TelaAtendente a = new TelaAtendente();
+    private LoginDAL ld;
+    
     public LoginUI() {
         initComponents();
     }
@@ -35,7 +49,6 @@ public class LoginUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Login");
-        setAlwaysOnTop(true);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
 
@@ -48,6 +61,11 @@ public class LoginUI extends javax.swing.JFrame {
         txtLogin.setToolTipText("");
 
         btnEntrar.setText("ENTRAR");
+        btnEntrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEntrarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -78,9 +96,9 @@ public class LoginUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(37, 37, 37)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(btnEntrar)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addGap(24, 24, 24))
         );
 
         jLabel3.getAccessibleContext().setAccessibleName("USUÁRIO");
@@ -88,6 +106,38 @@ public class LoginUI extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
+        
+        String senha = new String(txtSenha.getPassword());
+        
+        l = new LoginCTRL();
+        
+        try {
+            l.autenticacao(txtLogin.getText().trim(), senha);
+        } catch (SQLException ex) {
+            Logger.getLogger(LoginUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        txtLogin.setText("");
+        txtSenha.setText("");
+        
+        if(l.getTipo().equals("gerente")){
+            g.setVisible(true);
+            this.dispose();
+        }
+        
+        if(l.getTipo().equals("medico")){
+            m.setVisible(true);
+            this.dispose();
+        }
+        
+        if(l.getTipo().equals("atendente")){
+            a.setVisible(true);
+            this.dispose();
+        }
+        
+    }//GEN-LAST:event_btnEntrarActionPerformed
 
     /**
      * @param args the command line arguments

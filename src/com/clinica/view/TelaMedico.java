@@ -14,6 +14,9 @@ public class TelaMedico extends javax.swing.JFrame {
     /**
      * Creates new form TelaPaciente
      */
+    
+    private LoginUI l;
+    
     public TelaMedico() {
         initComponents();
     }
@@ -52,6 +55,11 @@ public class TelaMedico extends javax.swing.JFrame {
         Sair.setBackground(new java.awt.Color(255, 255, 255));
         Sair.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         Sair.setText("Sair");
+        Sair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SairActionPerformed(evt);
+            }
+        });
 
         CadastrarAgenda.setBackground(new java.awt.Color(255, 255, 255));
         CadastrarAgenda.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -115,6 +123,13 @@ public class TelaMedico extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void SairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SairActionPerformed
+        l = new LoginUI();
+        
+        l.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_SairActionPerformed
 
     /**
      * @param args the command line arguments

@@ -22,7 +22,8 @@ public class GerenteUI extends javax.swing.JFrame {
     private static CadastroAtendenteUI a = new CadastroAtendenteUI();
     private static CadastroMedicoUI m = new CadastroMedicoUI();
     private static CadastroGerenteUI g = new CadastroGerenteUI();
-   
+    private static CadastroSetorUI s = new CadastroSetorUI();
+    
     URL url  = this.getClass().getResource("/com/clinica/images/gerente.png");
     
     public GerenteUI() {
@@ -161,6 +162,11 @@ public class GerenteUI extends javax.swing.JFrame {
         menuAddSetor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         menuAddSetor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/clinica/images/5585Add_Folder_25911.png"))); // NOI18N
         menuAddSetor.setText("Cadastrar Setores");
+        menuAddSetor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuAddSetorActionPerformed(evt);
+            }
+        });
         menuCadastros.add(menuAddSetor);
 
         addvalorCMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F6, 0));
@@ -383,6 +389,10 @@ public class GerenteUI extends javax.swing.JFrame {
     private void menuAddGerenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAddGerenteActionPerformed
         g.setVisible(true);
     }//GEN-LAST:event_menuAddGerenteActionPerformed
+
+    private void menuAddSetorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAddSetorActionPerformed
+        s.setVisible(true);
+    }//GEN-LAST:event_menuAddSetorActionPerformed
 
     /**
      * @param args the command line arguments
