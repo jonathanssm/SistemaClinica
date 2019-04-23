@@ -58,7 +58,7 @@ public class MedicoCTRL {
         m.getEndereco().setCep(cep);
         m.getTelefone().setCelular(celular);
         m.setEspecialidade(especialidade);
-        
+
         if (telefone.equals("")) {
             telefone = null;
         } else {
@@ -72,6 +72,52 @@ public class MedicoCTRL {
         }
 
         md.addMedico(m);
+    }
+
+    public void search(String crm) throws SQLException {
+
+        m = new Medico();
+        md = new MedicoDAL(con);
+
+        m.setCrm(Long.parseLong(crm));
+
+        md.search(m);
+
+    }
+
+    public void update(String rg, String nome, String dnasc, String email, String sexo, String ctrab, String pis, String salario) throws SQLException {
+
+        m = new Medico();
+        md = new MedicoDAL(con);
+        
+        m.setRg(rg);
+        m.setNome(nome);
+        m.setData_nasc(dnasc);
+        m.setEmail(email);
+        
+        if(sexo.equalsIgnoreCase("masculino")){
+            sexo = "M";
+        }
+        
+        if(sexo.equalsIgnoreCase("feminino")){
+            sexo = "F";
+        }
+        
+        if(sexo.equalsIgnoreCase("outros")){
+            sexo = "O";
+        }
+        
+        m.setSexo(sexo);
+        m.setCarteiraTrabalho(Integer.parseInt(ctrab));
+        m.setPis(Long.parseLong(pis));
+        m.setSalario(Double.parseDouble(salario));
+        
+        md.update(m);
+        
+    }
+
+    public String returnEspecialidade() {
+        return m.getEspecialidade();
     }
 
 }

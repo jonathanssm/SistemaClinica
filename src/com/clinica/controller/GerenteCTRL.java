@@ -68,4 +68,14 @@ public class GerenteCTRL {
 
     }
 
+    public void delete(String cpf) throws SQLException {
+
+        g = new Gerente();
+        gd = new GerenteDAL(con);
+        
+        g.setCpf(Long.parseLong(cpf));
+        gd.delete(g);
+        
+    }
+
 }

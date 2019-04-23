@@ -19,6 +19,8 @@ public class LoginDAL {
 
     private Conexao con = null;
     private String tipo;
+    
+    private boolean check;
 
     public LoginDAL(Conexao con) throws SQLException {
         this.con = con;
@@ -111,5 +113,5 @@ public class LoginDAL {
     public String getTipo() {
         return tipo;
     }
-
+   
 }

@@ -7,7 +7,9 @@ package com.clinica.dal;
 
 import com.clinica.model.Gerente;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,7 +24,7 @@ public class GerenteDAL {
         con.setAutoCommit(false);
     }
 
-   public void add(Gerente g) throws SQLException {
+    public void add(Gerente g) throws SQLException {
 
         try {
 
@@ -69,6 +71,50 @@ public class GerenteDAL {
             con.rollBack();
             System.out.println("ERROR");
         } finally {
+            con.getConnection().close();
+            System.out.println("Desconectado");
+        }
+
+    }
+
+    public void delete(Gerente g) throws SQLException {
+
+        String sql = "select id_funcionario, cargo from Funcionarios where id_funcionario = ?";
+        String sql2 = "delete from Funcionarios where id_funcionario = ?";
+        String sql3 = "delete from Telefones where id_telefone = ?";
+        String sql4 = "delete from Enderecos where id_endereco = ?";
+
+        PreparedStatement ps = con.getPreparedStatement(sql);
+        PreparedStatement ps2 = con.getPreparedStatement(sql2);
+        PreparedStatement ps3 = con.getPreparedStatement(sql3);
+        PreparedStatement ps4 = con.getPreparedStatement(sql4);
+
+        ResultSet rs;
+
+        try {
+
+            ps.setLong(1, g.getCpf());
+            ps2.setLong(1, g.getCpf());
+            ps3.setLong(1, g.getCpf());
+            ps4.setLong(1, g.getCpf());
+
+            rs = ps.executeQuery();
+
+            if (rs.next() && !rs.getString(2).equalsIgnoreCase("medico") && !rs.getString(2).equalsIgnoreCase("atendente")) {
+                ps2.execute();
+                ps3.execute();
+                ps4.execute();
+
+                JOptionPane.showMessageDialog(null, "Deletado");
+            } else {
+                JOptionPane.showMessageDialog(null, "Gerente não existe ou o cpf passado é de um Médico");
+            }
+
+        } catch (Exception e) {
+            con.rollBack();
+            System.out.println("ERROR = " + e);
+        } finally {
+            con.commit();
             con.getConnection().close();
             System.out.println("Desconectado");
         }

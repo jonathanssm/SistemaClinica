@@ -23,7 +23,7 @@ public class CadastroAtendenteUI extends javax.swing.JFrame {
      */
     private AtendenteCTRL a;
     private LoginCTRL l;
-    
+
     public CadastroAtendenteUI() {
         initComponents();
     }
@@ -124,25 +124,13 @@ public class CadastroAtendenteUI extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
-        try {
-            txtCTrabalho.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("########")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        txtCTrabalho.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
-        try {
-            txtPIS.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###########")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        txtPIS.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
         txtSalario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
 
-        try {
-            txtTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) ####-####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        txtTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
         try {
             txtCelular.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #-####-####")));
@@ -192,9 +180,8 @@ public class CadastroAtendenteUI extends javax.swing.JFrame {
                                 .addComponent(jLabel8)
                                 .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jLabel1)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtCPF, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtDNASC, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE))
+                                .addComponent(txtCPF)
+                                .addComponent(txtDNASC, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
                                 .addComponent(jLabel4)
                                 .addComponent(jLabel5)
                                 .addComponent(lblSetor)
@@ -283,9 +270,9 @@ public class CadastroAtendenteUI extends javax.swing.JFrame {
                         .addComponent(txtCEP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(boxSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel9))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtPIS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -323,47 +310,45 @@ public class CadastroAtendenteUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadastrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCadastrarMouseClicked
-        
+
         String sexo = null;
         String senha = new String(txtSenha.getPassword());
-        
+
         if (txtSetor.getText().isEmpty()) {
             txtSetor.setText(null);
         }
-        
+
         if (boxSexo.getSelectedItem().toString().equalsIgnoreCase("masculino")) {
             sexo = "M";
         }
-        
+
         if (boxSexo.getSelectedItem().toString().equalsIgnoreCase("feminino")) {
             sexo = "F";
         }
-        
+
         if (boxSexo.getSelectedItem().toString().equalsIgnoreCase("outros")) {
             sexo = "O";
         }
         
         if (boxSexo.getSelectedItem().toString().equalsIgnoreCase("*sexo") || txtCPF.getText().isEmpty() || txtNome.getText().isEmpty() || txtRG.getText().isEmpty() || txtDNASC.getText().isEmpty()
-                || txtEndereco.getText().isEmpty() || txtBairro.getText().isEmpty() || txtNumero.getText().isEmpty() || txtCEP.getText().isEmpty() || txtCelular.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Todos os campos com '*' são obrigatorios!");
+                || txtEndereco.getText().isEmpty() || txtBairro.getText().isEmpty() || txtNumero.getText().isEmpty() || txtCEP.getText().isEmpty() || txtCelular.getText().isEmpty() || txtSetor.getText().equals("0")) {
+            JOptionPane.showMessageDialog(null, "Todos os campos com '*' são obrigatorios e o setor não pode ser 0!");
         } else {
-            
+
             try {
                 a = new AtendenteCTRL();
-                l = new LoginCTRL();
-                
+
                 a.add(Long.parseLong(txtCPF.getText().replace(".", "").replace("-", "")), txtRG.getText().replace(".", "").replace("-", "").replace(" ", ""), txtNome.getText(), txtDNASC.getText(), txtEmail.getText(), sexo,
-                        Integer.parseInt(txtCTrabalho.getText()), Long.parseLong(txtPIS.getText()), Double.parseDouble(txtSalario.getText().replace(",", "")), "ATENDENTE", Integer.parseInt(txtSetor.getText()), txtEndereco.getText(),
+                        txtCTrabalho.getText(), txtPIS.getText(), txtSalario.getText().replace(",", ""), "ATENDENTE", txtSetor.getText(), txtEndereco.getText(),
                         txtBairro.getText(), txtNumero.getText(), Integer.parseInt(txtCEP.getText().replaceAll("-", "")), txtCelular.getText().replace("-", "").replace("(", "").replace(")", "").replace(" ", ""),
-                        txtTelefone.getText().replace("-", "").replace("(", "").replace(")", "").replace(" ", ""));
-                
-                l.add(Long.parseLong(txtCPF.getText().replace(".", "").replace("-", "")), txtLogin.getText().trim(), senha, "ATENDENTE");
+                        txtTelefone.getText(), txtLogin.getText().trim(), senha);
+
             } catch (SQLException ex) {
                 Logger.getLogger(CadastroAtendenteUI.class.getName()).log(Level.SEVERE, null, ex);
             }
-            JOptionPane.showMessageDialog(null, "Cadastrado");
+
         }
-        
+
     }//GEN-LAST:event_btnCadastrarMouseClicked
 
     /**

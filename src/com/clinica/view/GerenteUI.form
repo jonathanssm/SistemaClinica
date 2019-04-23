@@ -178,6 +178,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Editar Paciente"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuEditarPacienteActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator4">
             </MenuItem>
@@ -191,6 +194,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Editar Setor"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuEditarSetorActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuEditarValorConsulta">
               <Properties>
@@ -226,6 +232,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Deletar Paciente"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuDeletarPacienteActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuDeletarMedico">
               <Properties>
@@ -248,6 +257,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Deletar Atendente"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuDeletarAtendenteActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuDeletarGerente">
               <Properties>
@@ -259,6 +271,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Deletar Gerente"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuDeletarGerenteActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JPopupMenu$Separator" name="jSeparator5">
             </MenuItem>
@@ -355,6 +370,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Setor"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuConsultasSetorActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuConsultasConsulta">
               <Properties>

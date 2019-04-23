@@ -14,7 +14,7 @@ public class Funcionario {
     private Setor setor;
     private Endereco endereco;
     private Telefone telefone;
-    
+
     private String nome;
     private String rg;
     private Long cpf;
@@ -25,6 +25,8 @@ public class Funcionario {
     private Long pis;
     private Double salario;
     private String cargo;
+    private String login;
+    private String senha;
 
     public Funcionario() {
         this.setor = new Setor();
@@ -134,6 +136,22 @@ public class Funcionario {
 
     public void setTelefone(Telefone telefone) {
         this.telefone = telefone;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 
 }

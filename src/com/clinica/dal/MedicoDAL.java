@@ -6,8 +6,11 @@
 package com.clinica.dal;
 
 import com.clinica.model.Medico;
+import com.mysql.cj.protocol.Resultset;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -74,6 +77,66 @@ public class MedicoDAL {
             e.getStackTrace();
             con.rollBack();
             System.out.println("ERROR");
+        } finally {
+            con.commit();
+            con.getConnection().close();
+            System.out.println("Desconectado");
+        }
+
+    }
+
+    public void search(Medico m) throws SQLException {
+
+        try {
+
+            String sql = "select crm, especialidade from Medicos where crm = ?";
+
+            PreparedStatement ps = con.getPreparedStatement(sql);
+
+            ps.setLong(1, m.getCrm());
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                m.setEspecialidade(rs.getString(2));
+                JOptionPane.showMessageDialog(null, "Médico Encontrado");
+            } else {
+                JOptionPane.showMessageDialog(null, "Médico Não Existe !");
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            con.getConnection().close();
+            System.out.println("Desconectado");
+        }
+
+    }
+
+    public void update(Medico m) throws SQLException {
+
+        String sql = "update Funcionarios set rg=?, nome=?, data_nasc=?, email=?, sexo=?, carteira_trabalho=?, pis=?, salario=?";
+
+        PreparedStatement ps = con.getPreparedStatement(sql);
+
+        try {
+
+            ps.setString(1, m.getRg());
+            ps.setString(2, m.getNome());
+            ps.setString(3, m.getData_nasc());
+            ps.setString(4, m.getEmail());
+            ps.setString(5, m.getSexo());
+            ps.setLong(6, m.getCarteiraTrabalho());
+            ps.setLong(7, m.getPis());
+            ps.setDouble(8, m.getSalario());
+
+            ps.execute();
+            
+            JOptionPane.showMessageDialog(null, "Dados Atualizados");
+
+        } catch (Exception e) {
+            System.out.println(e);
+            con.rollBack();
         } finally {
             con.commit();
             con.getConnection().close();

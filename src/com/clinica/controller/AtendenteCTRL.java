@@ -37,10 +37,12 @@ public class AtendenteCTRL {
 
     }
 
-    public void add(Long cpf, String rg, String nome, String data_nasc, String email, String sexo, int cTrabalho, Long pis, Double salario, String cargo, int setor, String endereco, String bairro, String numero, int cep, String celular, String telefone) throws SQLException {
+    public void add(Long cpf, String rg, String nome, String data_nasc, String email, String sexo, String cTrabalho, String pis, String salario, String cargo, String setor, String endereco, String bairro, String numero, int cep, String celular, String telefone, String login, String senha) throws SQLException {
 
         a = new Atendente();
         ad = new AtendenteDAL(con);
+
+        String pis0 = "0";
 
         a.setCpf(cpf);
         a.setRg(rg);
@@ -48,24 +50,50 @@ public class AtendenteCTRL {
         a.setData_nasc(data_nasc);
         a.setEmail(email);
         a.setSexo(sexo);
-        a.setCarteiraTrabalho(cTrabalho);
-        a.setPis(pis);
-        a.setSalario(salario);
         a.setCargo(cargo);
-        a.getSetor().setId(setor);
+        if (setor.equals("")) {
+            a.getSetor().setId(0);
+        } else {
+            a.getSetor().setId(Integer.parseInt(setor));
+        }
+        if (cTrabalho.equals("")) {
+            a.setCarteiraTrabalho(0);
+        } else {
+            a.setCarteiraTrabalho(Integer.parseInt(cTrabalho));
+        }
+        if (pis.equals("")) {
+            a.setPis(Long.parseLong(pis0));
+        } else {
+            a.setPis(Long.parseLong(pis));
+        }
+        if (salario.equals("")) {
+            a.setSalario(0);
+        } else {
+            a.setSalario(Double.parseDouble(salario));
+        }
         a.getEndereco().setEndereco(endereco);
         a.getEndereco().setBairro(bairro);
         a.getEndereco().setNumero(numero);
         a.getEndereco().setCep(cep);
         a.getTelefone().setCelular(celular);
-
+        a.setLogin(login);
+        a.setSenha(senha);
         if (telefone.equals("")) {
-            telefone = null;
+            a.getTelefone().setTelefone(null);
         } else {
             a.getTelefone().setTelefone(telefone);
         }
-
         ad.add(a);
+
+    }
+
+    public void delete(String cpf) throws SQLException {
+
+        a = new Atendente();
+        ad = new AtendenteDAL(con);
+
+        a.setCpf(Long.parseLong(cpf));
+        ad.delete(a);
 
     }
 

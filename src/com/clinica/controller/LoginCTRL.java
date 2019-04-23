@@ -18,6 +18,7 @@ public class LoginCTRL {
 
     private Login l;
     private LoginDAL ld;
+    
     private String tipo;
 
     private Conexao con = new Conexao();
@@ -49,7 +50,5 @@ public class LoginCTRL {
     public String getTipo() {
         return tipo;
     }
-    
-    
 
 }

@@ -33,4 +33,34 @@ public class SetorCTRL {
 
     }
 
+    public void update(int idS, String nomeS) throws SQLException {
+
+        s = new Setor();
+        sd = new SetorDAL(con);
+
+        s.setNome(nomeS);
+
+        sd.update(s, idS);
+
+    }
+
+    public void search(String nome) throws SQLException {
+
+        s = new Setor();
+        sd = new SetorDAL(con);
+
+        s.setNome(nome);
+
+        sd.search(s);
+
+    }
+
+    public int retornoID() {
+        return s.getId();
+    }
+
+    public String retornoNome() {
+        return s.getNome();
+    }
+
 }

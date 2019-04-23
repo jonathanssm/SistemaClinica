@@ -16,16 +16,20 @@ public class GerenteUI extends javax.swing.JFrame {
     /**
      * Creates new form GerenteUI
      */
-    
     private LoginUI l;
     private static CadastroPacienteUI p = new CadastroPacienteUI();
     private static CadastroAtendenteUI a = new CadastroAtendenteUI();
     private static CadastroMedicoUI m = new CadastroMedicoUI();
     private static CadastroGerenteUI g = new CadastroGerenteUI();
     private static CadastroSetorUI s = new CadastroSetorUI();
-    
-    URL url  = this.getClass().getResource("/com/clinica/images/gerente.png");
-    
+    private static EditarSetorUI es = new EditarSetorUI();
+    private static ConsultarSetorUI cs = new ConsultarSetorUI();
+    private static EditarPacienteUI ep = new EditarPacienteUI();
+    private static DeletarPacienteUI dp = new DeletarPacienteUI();
+    private static DeletarAtendenteGerenteUI dag = new DeletarAtendenteGerenteUI();
+
+    URL url = this.getClass().getResource("/com/clinica/images/gerente.png");
+
     public GerenteUI() {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
@@ -194,12 +198,22 @@ public class GerenteUI extends javax.swing.JFrame {
         menuEditarPaciente.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         menuEditarPaciente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/clinica/images/pessoa.png"))); // NOI18N
         menuEditarPaciente.setText("Editar Paciente");
+        menuEditarPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuEditarPacienteActionPerformed(evt);
+            }
+        });
         menuEditar.add(menuEditarPaciente);
         menuEditar.add(jSeparator4);
 
         menuEditarSetor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         menuEditarSetor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/clinica/images/5585Add_Folder_25911.png"))); // NOI18N
         menuEditarSetor.setText("Editar Setor");
+        menuEditarSetor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuEditarSetorActionPerformed(evt);
+            }
+        });
         menuEditar.add(menuEditarSetor);
 
         menuEditarValorConsulta.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -216,6 +230,11 @@ public class GerenteUI extends javax.swing.JFrame {
         menuDeletarPaciente.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         menuDeletarPaciente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/clinica/images/pessoa.png"))); // NOI18N
         menuDeletarPaciente.setText("Deletar Paciente");
+        menuDeletarPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuDeletarPacienteActionPerformed(evt);
+            }
+        });
         menuDeletarCadastros.add(menuDeletarPaciente);
 
         menuDeletarMedico.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -226,11 +245,21 @@ public class GerenteUI extends javax.swing.JFrame {
         menuDeletarAtendente.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         menuDeletarAtendente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/clinica/images/atendente.png"))); // NOI18N
         menuDeletarAtendente.setText("Deletar Atendente");
+        menuDeletarAtendente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuDeletarAtendenteActionPerformed(evt);
+            }
+        });
         menuDeletarCadastros.add(menuDeletarAtendente);
 
         menuDeletarGerente.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         menuDeletarGerente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/clinica/images/gerente.png"))); // NOI18N
         menuDeletarGerente.setText("Deletar Gerente");
+        menuDeletarGerente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuDeletarGerenteActionPerformed(evt);
+            }
+        });
         menuDeletarCadastros.add(menuDeletarGerente);
         menuDeletarCadastros.add(jSeparator5);
 
@@ -273,6 +302,11 @@ public class GerenteUI extends javax.swing.JFrame {
         menuConsultasSetor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         menuConsultasSetor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/clinica/images/5585Add_Folder_25911.png"))); // NOI18N
         menuConsultasSetor.setText("Setor");
+        menuConsultasSetor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuConsultasSetorActionPerformed(evt);
+            }
+        });
         menuConsultas.add(menuConsultasSetor);
 
         menuConsultasConsulta.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.SHIFT_MASK));
@@ -362,12 +396,12 @@ public class GerenteUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void sairMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sairMenuMouseClicked
-        
-       l = new LoginUI();
-       
-       l.setVisible(true);
-       this.dispose();
-        
+
+        l = new LoginUI();
+
+        l.setVisible(true);
+        this.dispose();
+
     }//GEN-LAST:event_sairMenuMouseClicked
 
     private void sairMenuMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sairMenuMouseEntered
@@ -393,6 +427,32 @@ public class GerenteUI extends javax.swing.JFrame {
     private void menuAddSetorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuAddSetorActionPerformed
         s.setVisible(true);
     }//GEN-LAST:event_menuAddSetorActionPerformed
+
+    private void menuConsultasSetorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuConsultasSetorActionPerformed
+        cs.setVisible(true);
+    }//GEN-LAST:event_menuConsultasSetorActionPerformed
+
+    private void menuEditarSetorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEditarSetorActionPerformed
+        es.setVisible(true);
+    }//GEN-LAST:event_menuEditarSetorActionPerformed
+
+    private void menuEditarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuEditarPacienteActionPerformed
+        ep.setVisible(true);
+    }//GEN-LAST:event_menuEditarPacienteActionPerformed
+
+    private void menuDeletarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDeletarPacienteActionPerformed
+        dp.setVisible(true);
+    }//GEN-LAST:event_menuDeletarPacienteActionPerformed
+
+    private void menuDeletarAtendenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDeletarAtendenteActionPerformed
+        dag.setVisible(true);
+        dag.tipo = "Atendente";
+    }//GEN-LAST:event_menuDeletarAtendenteActionPerformed
+
+    private void menuDeletarGerenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDeletarGerenteActionPerformed
+        dag.setVisible(true);
+        dag.tipo = "Gerente";
+    }//GEN-LAST:event_menuDeletarGerenteActionPerformed
 
     /**
      * @param args the command line arguments
