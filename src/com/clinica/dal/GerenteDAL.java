@@ -26,56 +26,119 @@ public class GerenteDAL {
 
     public void add(Gerente g) throws SQLException {
 
-        try {
+            try {
 
-            String sql = "insert into Funcionarios (id_funcionario, rg, nome, data_nasc, email, sexo, carteira_trabalho, pis, salario, cargo, Setores_id_setor, Telefones_id_telefone, Enderecos_id_endereco) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            String sql2 = "insert into Telefones (id_telefone, celular, fixo) values (?, ?, ?)";
-            String sql3 = "insert into Enderecos (id_endereco, endereco, numero, cep, bairro) values (?, ?, ?, ?, ?)";
+                String sql = "insert into Funcionarios (id_funcionario, rg, nome, data_nasc, email, sexo, carteira_trabalho, pis, salario, cargo, Setores_id_setor, Telefones_id_telefone, Enderecos_id_endereco, Usuarios_id_usuario) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                String sql2 = "insert into Telefones (id_telefone, celular, fixo) values (?, ?, ?)";
+                String sql3 = "insert into Enderecos (id_endereco, endereco, numero, cep, bairro) values (?, ?, ?, ?, ?)";
+                String sql4 = "insert into Usuarios (id_usuario, login, senha, tipo) values (?, ? , ?, ?)";
+                String sql5 = "update Funcionarios set Usuarios_id_usuario = ? where id_funcionario = ?";
+                String sql6 = "select login from Usuarios where login = ?";
+                String sql7 = "select id_setor from Setores where id_setor = ?";
+                String sql8 = "select id_funcionario from Funcionarios where id_funcionario = ?";
 
-            PreparedStatement stm = con.getPreparedStatement(sql);
-            PreparedStatement stm2 = con.getPreparedStatement(sql2);
-            PreparedStatement stm3 = con.getPreparedStatement(sql3);
+                PreparedStatement stm = con.getPreparedStatement(sql);
+                PreparedStatement stm2 = con.getPreparedStatement(sql2);
+                PreparedStatement stm3 = con.getPreparedStatement(sql3);
+                PreparedStatement ps4 = con.getPreparedStatement(sql4);
+                PreparedStatement ps5 = con.getPreparedStatement(sql5);
+                PreparedStatement ps6 = con.getPreparedStatement(sql6);
+                PreparedStatement ps7 = con.getPreparedStatement(sql7);
+                PreparedStatement ps8 = con.getPreparedStatement(sql8);
 
-            stm.setLong(1, g.getCpf());
-            stm.setString(2, g.getRg());
-            stm.setString(3, g.getNome());
-            stm.setString(4, g.getData_nasc());
-            stm.setString(5, g.getEmail());
-            stm.setString(6, g.getSexo());
-            stm.setInt(7, g.getCarteiraTrabalho());
-            stm.setLong(8, g.getPis());
-            stm.setDouble(9, g.getSalario());
-            stm.setString(10, g.getCargo());
-            stm.setInt(11, g.getSetor().getId());
-            stm.setLong(12, g.getCpf());
-            stm.setLong(13, g.getCpf());
+                stm.setLong(1, g.getCpf());
+                stm.setString(2, g.getRg());
+                stm.setString(3, g.getNome());
+                stm.setString(4, g.getData_nasc());
+                if (g.getEmail().equals("")) {
+                    stm.setString(5, null);
+                } else {
+                    stm.setString(5, g.getEmail());
+                }
+                stm.setString(6, g.getSexo());
+                if (g.getCarteiraTrabalho() == 0) {
+                    stm.setString(7, null);
+                } else {
+                    stm.setInt(7, g.getCarteiraTrabalho());
+                }
+                if (g.getPis() == 0) {
+                    stm.setString(8, null);
+                } else {
+                    stm.setLong(8, g.getPis());
+                }
+                if (g.getSalario() == 0) {
+                    stm.setString(9, null);
+                } else {
+                    stm.setDouble(9, g.getSalario());
+                }
+                stm.setString(10, g.getCargo());
+                if (g.getSetor().getId() == 0) {
+                    stm.setString(11, null);
+                } else {
+                    stm.setInt(11, g.getSetor().getId());
+                }
+                stm.setLong(12, g.getCpf());
+                stm.setLong(13, g.getCpf());
+                stm.setLong(14, g.getCpf());
 
-            stm2.setLong(1, g.getCpf());
-            stm2.setString(2, g.getTelefone().getCelular());
-            stm2.setString(3, g.getTelefone().getTelefone());
+                stm2.setLong(1, g.getCpf());
+                stm2.setString(2, g.getTelefone().getCelular());
+                stm2.setString(3, g.getTelefone().getTelefone());
 
-            stm3.setLong(1, g.getCpf());
-            stm3.setString(2, g.getEndereco().getEndereco());
-            stm3.setString(3, g.getEndereco().getNumero());
-            stm3.setLong(4, g.getEndereco().getCep());
-            stm3.setString(5, g.getEndereco().getBairro());
+                stm3.setLong(1, g.getCpf());
+                stm3.setString(2, g.getEndereco().getEndereco());
+                stm3.setString(3, g.getEndereco().getNumero());
+                stm3.setLong(4, g.getEndereco().getCep());
+                stm3.setString(5, g.getEndereco().getBairro());
 
-            stm2.execute();
-            stm3.execute();
-            stm.execute();
+                ps4.setLong(1, g.getCpf());
+                ps4.setString(2, g.getLogin());
+                ps4.setString(3, g.getSenha());
+                ps4.setString(4, g.getCargo());
 
-            con.commit();
+                ps5.setLong(1, g.getCpf());
+                ps5.setLong(2, g.getCpf());
 
-        } catch (SQLException e) {
-            e.getStackTrace();
-            con.rollBack();
-            System.out.println("ERROR");
-        } finally {
-            con.getConnection().close();
-            System.out.println("Desconectado");
+                ps6.setString(1, g.getLogin());
+
+                ps7.setInt(1, g.getSetor().getId());
+
+                ps8.setLong(1, g.getCpf());
+
+                ResultSet rs = ps6.executeQuery();
+                ResultSet rs2 = ps7.executeQuery();
+                ResultSet rs3 = ps8.executeQuery();
+
+                if (rs.next()) {
+                    JOptionPane.showMessageDialog(null, "Usuario em Uso");
+                } else {
+                    if (rs3.next()) {
+                        JOptionPane.showMessageDialog(null, "CPF já cadastrado");
+                    } else {
+                        if (rs2.next() || g.getSetor().getId() == 0) {
+                            ps4.execute();
+                            ps5.execute();
+                            stm2.execute();
+                            stm3.execute();
+                            stm.execute();
+                            JOptionPane.showMessageDialog(null, "Cadastrado");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Setor não existe");
+                        }
+                    }
+                }
+
+            } catch (SQLException e) {
+                e.getStackTrace();
+                con.rollBack();
+                System.out.println("ERROR");
+            } finally {
+                con.commit();
+                con.getConnection().close();
+                System.out.println("Desconectado");
+            }
+
         }
-
-    }
 
     public void delete(Gerente g) throws SQLException {
 

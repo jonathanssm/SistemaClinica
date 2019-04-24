@@ -35,6 +35,7 @@ public class AtendenteDAL {
             String sql5 = "update Funcionarios set Usuarios_id_usuario = ? where id_funcionario = ?";
             String sql6 = "select login from Usuarios where login = ?";
             String sql7 = "select id_setor from Setores where id_setor = ?";
+            String sql8 = "select id_funcionario from Funcionarios where id_funcionario = ?";
 
             PreparedStatement stm = con.getPreparedStatement(sql);
             PreparedStatement stm2 = con.getPreparedStatement(sql2);
@@ -43,6 +44,7 @@ public class AtendenteDAL {
             PreparedStatement ps5 = con.getPreparedStatement(sql5);
             PreparedStatement ps6 = con.getPreparedStatement(sql6);
             PreparedStatement ps7 = con.getPreparedStatement(sql7);
+            PreparedStatement ps8 = con.getPreparedStatement(sql8);
 
             stm.setLong(1, a.getCpf());
             stm.setString(2, a.getRg());
@@ -81,9 +83,6 @@ public class AtendenteDAL {
 
             stm2.setLong(1, a.getCpf());
             stm2.setString(2, a.getTelefone().getCelular());
-            //if(a.getTelefone().getTelefone().equals(null)){
-               // stm2.setString(3, null);
-            //}
             stm2.setString(3, a.getTelefone().getTelefone());
 
             stm3.setLong(1, a.getCpf());
@@ -104,21 +103,28 @@ public class AtendenteDAL {
 
             ps7.setInt(1, a.getSetor().getId());
 
+            ps8.setLong(1, a.getCpf());
+
             ResultSet rs = ps6.executeQuery();
             ResultSet rs2 = ps7.executeQuery();
+            ResultSet rs3 = ps8.executeQuery();
 
             if (rs.next()) {
                 JOptionPane.showMessageDialog(null, "Usuario em Uso");
             } else {
-                if (rs2.next() || a.getSetor().getId() == 0) {
-                    ps4.execute();
-                    ps5.execute();
-                    stm2.execute();
-                    stm3.execute();
-                    stm.execute();
-                    JOptionPane.showMessageDialog(null, "Cadastrado");
+                if (rs3.next()) {
+                    JOptionPane.showMessageDialog(null, "CPF já cadastrado");
                 } else {
-                    JOptionPane.showMessageDialog(null, "Setor não existe");
+                    if (rs2.next() || a.getSetor().getId() == 0) {
+                        ps4.execute();
+                        ps5.execute();
+                        stm2.execute();
+                        stm3.execute();
+                        stm.execute();
+                        JOptionPane.showMessageDialog(null, "Cadastrado");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Setor não existe");
+                    }
                 }
             }
 

@@ -36,30 +36,52 @@ public class GerenteCTRL {
 
     }
 
-    public void add(Long cpf, String rg, String nome, String data_nasc, String email, String sexo, int cTrabalho, Long pis, Double salario, String cargo, int setor, String endereco, String bairro, String numero, int cep, String celular, String telefone) throws SQLException {
+    public void add(String cpf, String rg, String nome, String data_nasc, String email, String sexo, String cTrabalho, String pis, String salario, String cargo, String setor, String endereco, String bairro, String numero, String cep, String celular, String telefone, String login, String senha) throws SQLException {
 
         g = new Gerente();
         gd = new GerenteDAL(con);
+        
+        String pis0 = "0";
+        int hashSenha = senha.hashCode();
 
-        g.setCpf(cpf);
+        g.setCpf(Long.parseLong(cpf));
         g.setRg(rg);
         g.setNome(nome);
         g.setData_nasc(data_nasc);
         g.setEmail(email);
         g.setSexo(sexo);
-        g.setCarteiraTrabalho(cTrabalho);
-        g.setPis(pis);
-        g.setSalario(salario);
         g.setCargo(cargo);
-        g.getSetor().setId(setor);
         g.getEndereco().setEndereco(endereco);
         g.getEndereco().setBairro(bairro);
         g.getEndereco().setNumero(numero);
-        g.getEndereco().setCep(cep);
+        g.getEndereco().setCep(Integer.parseInt(cep));
         g.getTelefone().setCelular(celular);
+        g.setLogin(login);
+        g.setSenha(hashSenha+"");
 
+        if (setor.equals("")) {
+            g.getSetor().setId(0);
+        } else {
+            g.getSetor().setId(Integer.parseInt(setor));
+        }
+        if (cTrabalho.equals("")) {
+            g.setCarteiraTrabalho(0);
+        } else {
+            g.setCarteiraTrabalho(Integer.parseInt(cTrabalho));
+        }
+        if (pis.equals("")) {
+            g.setPis(Long.parseLong(pis0));
+        } else {
+            g.setPis(Long.parseLong(pis));
+        }
+        if (salario.equals("")) {
+            g.setSalario(0);
+        } else {
+            g.setSalario(Double.parseDouble(salario));
+        }
+        
         if (telefone.equals("")) {
-            telefone = null;
+            g.getTelefone().setTelefone(null);
         } else {
             g.getTelefone().setTelefone(telefone);
         }

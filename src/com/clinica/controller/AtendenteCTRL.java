@@ -43,6 +43,8 @@ public class AtendenteCTRL {
         ad = new AtendenteDAL(con);
 
         String pis0 = "0";
+        
+        int hashCodeSenha = senha.hashCode();
 
         a.setCpf(cpf);
         a.setRg(rg);
@@ -77,7 +79,7 @@ public class AtendenteCTRL {
         a.getEndereco().setCep(cep);
         a.getTelefone().setCelular(celular);
         a.setLogin(login);
-        a.setSenha(senha);
+        a.setSenha(hashCodeSenha+"");
         if (telefone.equals("")) {
             a.getTelefone().setTelefone(null);
         } else {

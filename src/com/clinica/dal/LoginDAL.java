@@ -5,7 +5,6 @@
  */
 package com.clinica.dal;
 
-import com.clinica.model.Login;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,48 +24,6 @@ public class LoginDAL {
     public LoginDAL(Conexao con) throws SQLException {
         this.con = con;
         con.setAutoCommit(false);
-    }
-
-    public void add(Login l) throws SQLException {
-
-        try {
-            String sql = "insert into Usuarios (id_usuario, login, senha, tipo) values (?, ? , ?, ?)";
-            String sql2 = "update Funcionarios set Usuarios_id_usuario = ? where id_funcionario = ?";
-            String sql3 = "select login from Usuarios where login = ?";
-
-            PreparedStatement ps = con.getPreparedStatement(sql);
-            PreparedStatement ps2 = con.getPreparedStatement(sql2);
-            PreparedStatement ps3 = con.getPreparedStatement(sql3);
-
-            ps.setLong(1, l.getId());
-            ps.setString(2, l.getLogin());
-            ps.setString(3, l.getSenha());
-            ps.setString(4, l.getTipo());
-
-            ps2.setLong(1, l.getId());
-            ps2.setLong(2, l.getId());
-
-            ps3.setString(1, l.getLogin());
-
-            ResultSet rs = ps3.executeQuery();
-
-            if (rs.next()) {
-                JOptionPane.showMessageDialog(null, "Usuario em Uso");
-            } else {
-
-                ps.execute();
-                ps2.execute();
-            }
-
-            con.commit();
-        } catch (SQLException e) {
-            e.setStackTrace(e.getStackTrace());
-            con.rollBack();
-            System.out.println("ERROR");
-        } finally {
-            con.getConnection().close();
-            System.out.println("Desconectado");
-        }
     }
 
     public void autenticacao(String login, String senha) throws SQLException {
