@@ -123,23 +123,11 @@ public class CadastroMedicoUI extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
-        try {
-            txtCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        txtCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
-        try {
-            txtCTrabalho.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("########")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        txtCTrabalho.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
-        try {
-            txtPIS.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###########")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        txtPIS.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
         txtSalario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
 
@@ -391,13 +379,12 @@ public class CadastroMedicoUI extends javax.swing.JFrame {
                 m = new MedicoCTRL();
                 l = new LoginCTRL();
 
-                m.addMedico(Long.parseLong(txtCRM.getText().replace(".", "").replace(",", "")), Long.parseLong(txtCPF.getText().replace(".", "").replace("-", "")), txtRG.getText().replace(".", "").replace("-", "").replace(" ", ""), txtNome.getText(), txtDNASC.getText(), txtEmail.getText(),
-                        sexo, Integer.parseInt(txtCTrabalho.getText()), Long.parseLong(txtPIS.getText()), Double.parseDouble(txtSalario.getText().replace(",", "")), "MEDICO", Integer.parseInt(txtSetor.getText()), txtEndereco.getText(), txtBairro.getText(), txtNumero.getText(),
-                        Integer.parseInt(txtCEP.getText().replace("-", "")), txtCelular.getText().replace("-", "").replace("(", "").replace(")", "").replace(" ", ""), txtTelefone.getText().replace("-", "").replace("(", "").replace(")", "").replace(" ", ""),
-                        txtFone_3.getText().replace("(", "").replace(")", "").replace(" ", ""), txtEspecialidade.getText());
-                
-                l.add(Long.parseLong(txtCPF.getText().replace(".", "").replace("-", "")), txtLogin.getText().trim(), senha, "MEDICO");
-                
+                m.addMedico(txtCRM.getText(), txtCPF.getText(), txtRG.getText(), txtNome.getText(), txtDNASC.getText(), txtEmail.getText(),
+                        sexo, txtCTrabalho.getText(), txtPIS.getText(), txtSalario.getText().replace(",", ""), "MEDICO", txtSetor.getText(), 
+                        txtEndereco.getText(), txtBairro.getText(), txtNumero.getText(), Integer.parseInt(txtCEP.getText().replace("-", "")), 
+                        txtCelular.getText().replace("-", "").replace("(", "").replace(")", "").replace(" ", ""), txtTelefone.getText().replace("-", "").replace("(", "").replace(")", "").replace(" ", ""),
+                        txtFone_3.getText().replace("(", "").replace(")", "").replace(" ", ""), txtEspecialidade.getText(), txtLogin.getText().trim(), senha);
+
             } catch (SQLException ex) {
                 Logger.getLogger(CadastroMedicoUI.class.getName()).log(Level.SEVERE, null, ex);
             }

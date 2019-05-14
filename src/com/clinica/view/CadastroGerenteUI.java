@@ -117,23 +117,11 @@ public class CadastroGerenteUI extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
-        try {
-            txtCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        txtCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
-        try {
-            txtCTrabalho.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("########")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        txtCTrabalho.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
-        try {
-            txtPIS.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###########")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        txtPIS.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
         txtSalario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
 
@@ -359,12 +347,10 @@ public class CadastroGerenteUI extends javax.swing.JFrame {
                 g = new GerenteCTRL();
                 l = new LoginCTRL();
 
-                g.add(Long.parseLong(txtCPF.getText().replace(".", "").replace("-", "")), txtRG.getText().replace(".", "").replace("-", "").replace(" ", ""), txtNome.getText(), txtDNASC.getText(), txtEmail.getText(), sexo,
-                        Integer.parseInt(txtCTrabalho.getText()), Long.parseLong(txtPIS.getText()), Double.parseDouble(txtSalario.getText().replace(",", "")), "GERENTE", Integer.parseInt(txtSetor.getText()), txtEndereco.getText(),
-                        txtBairro.getText(), txtNumero.getText(), Integer.parseInt(txtCEP.getText().replaceAll("-", "")), txtCelular.getText().replace("-", "").replace("(", "").replace(")", "").replace(" ", ""),
-                        txtTelefone.getText().replace("-", "").replace("(", "").replace(")", "").replace(" ", ""));
-
-                l.add(Long.parseLong(txtCPF.getText().replace(".", "").replace("-", "")), txtLogin.getText().trim(), senha, "GERENTE");
+                g.add(txtCPF.getText(), txtRG.getText(), txtNome.getText(), txtDNASC.getText(), txtEmail.getText(), sexo,
+                        txtCTrabalho.getText(), txtPIS.getText(), txtSalario.getText().replace(",", ""), "GERENTE", txtSetor.getText(), txtEndereco.getText(),
+                        txtBairro.getText(), txtNumero.getText(), txtCEP.getText().replaceAll("-", ""), txtCelular.getText().replace("-", "").replace("(", "").replace(")", "").replace(" ", ""),
+                        txtTelefone.getText().replace("-", "").replace("(", "").replace(")", "").replace(" ", ""), txtLogin.getText().trim(), senha);
 
             } catch (SQLException ex) {
                 Logger.getLogger(CadastroGerenteUI.class.getName()).log(Level.SEVERE, null, ex);
