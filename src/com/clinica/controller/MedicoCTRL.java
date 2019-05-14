@@ -36,39 +36,64 @@ public class MedicoCTRL {
 
     }
 
-    public void addMedico(Long crm, Long cpf, String rg, String nome, String data_nasc, String email, String sexo, int cTrabalho, Long pis, Double salario, String cargo, int setor, String endereco, String bairro, String numero, int cep, String celular, String telefone, String fone3, String especialidade) throws SQLException {
+    public void addMedico(String crm, String cpf, String rg, String nome, String data_nasc, String email, String sexo, String cTrabalho, String pis, String salario, String cargo, String setor, String endereco, String bairro, String numero, int cep, String celular, String telefone, String fone3, String especialidade, String login, String senha) throws SQLException {
         m = new Medico();
         md = new MedicoDAL(con);
 
-        m.setCrm(crm);
-        m.setCpf(cpf);
+        String pis0 = "0";
+
+        int hashCodeSenha = senha.hashCode();
+
+        m.setCrm(Long.parseLong(crm));
+        m.setCpf(Long.parseLong(cpf));
         m.setRg(rg);
         m.setNome(nome);
         m.setData_nasc(data_nasc);
         m.setEmail(email);
         m.setSexo(sexo);
-        m.setCarteiraTrabalho(cTrabalho);
-        m.setPis(pis);
-        m.setSalario(salario);
+        //m.setCarteiraTrabalho(cTrabalho);
+        //m.setPis(pis);
+        //m.setSalario(salario);
         m.setCargo(cargo);
-        m.getSetor().setId(setor);
+        //m.getSetor().setId(setor);
         m.getEndereco().setEndereco(endereco);
         m.getEndereco().setBairro(bairro);
         m.getEndereco().setNumero(numero);
         m.getEndereco().setCep(cep);
         m.getTelefone().setCelular(celular);
         m.setEspecialidade(especialidade);
+        m.setLogin(login);
+        m.setSenha(hashCodeSenha + "");
 
+        if (setor.equals("")) {
+            m.getSetor().setId(0);
+        } else {
+            m.getSetor().setId(Integer.parseInt(setor));
+        }
+        if (cTrabalho.equals("")) {
+            m.setCarteiraTrabalho(0);
+        } else {
+            m.setCarteiraTrabalho(Integer.parseInt(cTrabalho));
+        }
+        if (pis.equals("")) {
+            m.setPis(Long.parseLong(pis0));
+        } else {
+            m.setPis(Long.parseLong(pis));
+        }
+        if (salario.equals("")) {
+            m.setSalario(0);
+        } else {
+            m.setSalario(Double.parseDouble(salario));
+        }
         if (telefone.equals("")) {
-            telefone = null;
+            m.getTelefone().setTelefone(null);
         } else {
             m.getTelefone().setTelefone(telefone);
         }
-
         if (fone3.equals("")) {
-            fone3 = null;
+            m.getTelefone().setTelefone(null);
         } else {
-            m.getTelefone().setFone3(fone3);
+            m.getTelefone().setTelefone(fone3);
         }
 
         md.addMedico(m);
@@ -89,31 +114,31 @@ public class MedicoCTRL {
 
         m = new Medico();
         md = new MedicoDAL(con);
-        
+
         m.setRg(rg);
         m.setNome(nome);
         m.setData_nasc(dnasc);
         m.setEmail(email);
-        
-        if(sexo.equalsIgnoreCase("masculino")){
+
+        if (sexo.equalsIgnoreCase("masculino")) {
             sexo = "M";
         }
-        
-        if(sexo.equalsIgnoreCase("feminino")){
+
+        if (sexo.equalsIgnoreCase("feminino")) {
             sexo = "F";
         }
-        
-        if(sexo.equalsIgnoreCase("outros")){
+
+        if (sexo.equalsIgnoreCase("outros")) {
             sexo = "O";
         }
-        
+
         m.setSexo(sexo);
         m.setCarteiraTrabalho(Integer.parseInt(ctrab));
         m.setPis(Long.parseLong(pis));
         m.setSalario(Double.parseDouble(salario));
-        
+
         md.update(m);
-        
+
     }
 
     public String returnEspecialidade() {
