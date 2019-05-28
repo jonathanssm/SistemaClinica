@@ -8,10 +8,13 @@ package com.clinica.controller;
 import com.clinica.dal.AtendenteDAL;
 import com.clinica.dal.Conexao;
 import com.clinica.model.Atendente;
-import com.clinica.model.Setor;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -36,6 +39,19 @@ public class AtendenteCTRL {
         }
 
     }
+    
+    private static String stringHexa(byte[] bytes) {
+        StringBuilder s = new StringBuilder();
+        for (int i = 0; i < bytes.length; i++) {
+            int parteAlta = ((bytes[i] >> 4) & 0xf) << 4;
+            int parteBaixa = bytes[i] & 0xf;
+            if (parteAlta == 0) {
+                s.append('0');
+            }
+            s.append(Integer.toHexString(parteAlta | parteBaixa));
+        }
+        return s.toString();
+    }
 
     public void add(Long cpf, String rg, String nome, String data_nasc, String email, String sexo, String cTrabalho, String pis, String salario, String cargo, String setor, String endereco, String bairro, String numero, int cep, String celular, String telefone, String login, String senha) throws SQLException {
 
@@ -43,8 +59,17 @@ public class AtendenteCTRL {
         ad = new AtendenteDAL(con);
 
         String pis0 = "0";
+
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(AtendenteCTRL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        md.update(senha.getBytes());
+        byte[] hashMd5 = md.digest();
         
-        int hashCodeSenha = senha.hashCode();
+        String senhaF = stringHexa(hashMd5);
 
         a.setCpf(cpf);
         a.setRg(rg);
@@ -79,7 +104,7 @@ public class AtendenteCTRL {
         a.getEndereco().setCep(cep);
         a.getTelefone().setCelular(celular);
         a.setLogin(login);
-        a.setSenha(hashCodeSenha+"");
+        a.setSenha(senhaF);
         if (telefone.equals("")) {
             a.getTelefone().setTelefone(null);
         } else {
@@ -97,6 +122,11 @@ public class AtendenteCTRL {
         a.setCpf(Long.parseLong(cpf));
         ad.delete(a);
 
+    }
+    
+    public void pTable () throws SQLException{
+        ad = new AtendenteDAL(con);
+        ad.PopularJTable("SELECT id_funcionario, rg, nome, data_nasc, sexo  FROM Funcionarios where cargo = 'ATENDENTE'");
     }
 
 }

@@ -27,7 +27,12 @@ public class GerenteUI extends javax.swing.JFrame {
     private static EditarPacienteUI ep = new EditarPacienteUI();
     private static DeletarPacienteUI dp = new DeletarPacienteUI();
     private static DeletarAtendenteGerenteUI dag = new DeletarAtendenteGerenteUI();
-
+    private static ListarAtendentesUI la = new ListarAtendentesUI();
+    private static ListarGerentesUI lg = new ListarGerentesUI();
+    private static ListarMédicosUI lm = new ListarMédicosUI();
+    private static ListarPacientesUI lp = new ListarPacientesUI();
+    private static ListarSetoresUI ls = new ListarSetoresUI();
+    
     URL url = this.getClass().getResource("/com/clinica/images/gerente.png");
 
     public GerenteUI() {
@@ -80,11 +85,12 @@ public class GerenteUI extends javax.swing.JFrame {
         cfolhapagamentoMenu = new javax.swing.JMenuItem();
         chistoricofrequenciaMenu = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
-        clistapacienteMenu = new javax.swing.JMenuItem();
-        clistamedicoMenu = new javax.swing.JMenuItem();
         clistaatendenteMenu = new javax.swing.JMenuItem();
-        menuListaConsulta = new javax.swing.JMenuItem();
+        menuListarGerente = new javax.swing.JMenuItem();
+        clistamedicoMenu = new javax.swing.JMenuItem();
+        clistapacienteMenu = new javax.swing.JMenuItem();
         menuListaSetores = new javax.swing.JMenuItem();
+        menuListaConsulta = new javax.swing.JMenuItem();
         sairMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -329,35 +335,66 @@ public class GerenteUI extends javax.swing.JFrame {
         menuConsultas.add(chistoricofrequenciaMenu);
         menuConsultas.add(jSeparator3);
 
-        clistapacienteMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
-        clistapacienteMenu.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        clistapacienteMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/clinica/images/pessoa.png"))); // NOI18N
-        clistapacienteMenu.setText("Lista De Pacientes");
-        menuConsultas.add(clistapacienteMenu);
+        clistaatendenteMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
+        clistaatendenteMenu.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        clistaatendenteMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/clinica/images/atendente.png"))); // NOI18N
+        clistaatendenteMenu.setText("Lista De Atendentes");
+        clistaatendenteMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clistaatendenteMenuActionPerformed(evt);
+            }
+        });
+        menuConsultas.add(clistaatendenteMenu);
+
+        menuListarGerente.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
+        menuListarGerente.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        menuListarGerente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/clinica/images/gerente.png"))); // NOI18N
+        menuListarGerente.setText("Listar Gerentes");
+        menuListarGerente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuListarGerenteActionPerformed(evt);
+            }
+        });
+        menuConsultas.add(menuListarGerente);
 
         clistamedicoMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_M, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
         clistamedicoMenu.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         clistamedicoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/clinica/images/medico.png"))); // NOI18N
         clistamedicoMenu.setText("Lista De Médicos");
+        clistamedicoMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clistamedicoMenuActionPerformed(evt);
+            }
+        });
         menuConsultas.add(clistamedicoMenu);
 
-        clistaatendenteMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
-        clistaatendenteMenu.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        clistaatendenteMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/clinica/images/atendente.png"))); // NOI18N
-        clistaatendenteMenu.setText("Lista De Atendentes");
-        menuConsultas.add(clistaatendenteMenu);
+        clistapacienteMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_P, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
+        clistapacienteMenu.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        clistapacienteMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/clinica/images/pessoa.png"))); // NOI18N
+        clistapacienteMenu.setText("Lista De Pacientes");
+        clistapacienteMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clistapacienteMenuActionPerformed(evt);
+            }
+        });
+        menuConsultas.add(clistapacienteMenu);
+
+        menuListaSetores.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
+        menuListaSetores.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        menuListaSetores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/clinica/images/5585Add_Folder_25911.png"))); // NOI18N
+        menuListaSetores.setText("Lista de Setores");
+        menuListaSetores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuListaSetoresActionPerformed(evt);
+            }
+        });
+        menuConsultas.add(menuListaSetores);
 
         menuListaConsulta.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_C, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
         menuListaConsulta.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         menuListaConsulta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/clinica/images/consulta.png"))); // NOI18N
         menuListaConsulta.setText("Lista De Consultas");
         menuConsultas.add(menuListaConsulta);
-
-        menuListaSetores.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.ALT_MASK | java.awt.event.InputEvent.SHIFT_MASK));
-        menuListaSetores.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        menuListaSetores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/clinica/images/5585Add_Folder_25911.png"))); // NOI18N
-        menuListaSetores.setText("Lista de Setores");
-        menuConsultas.add(menuListaSetores);
 
         jMenuBar1.add(menuConsultas);
 
@@ -454,6 +491,26 @@ public class GerenteUI extends javax.swing.JFrame {
         dag.tipo = "Gerente";
     }//GEN-LAST:event_menuDeletarGerenteActionPerformed
 
+    private void clistaatendenteMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clistaatendenteMenuActionPerformed
+        la.setVisible(true);
+    }//GEN-LAST:event_clistaatendenteMenuActionPerformed
+
+    private void menuListarGerenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuListarGerenteActionPerformed
+        lg.setVisible(true);
+    }//GEN-LAST:event_menuListarGerenteActionPerformed
+
+    private void clistamedicoMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clistamedicoMenuActionPerformed
+        lm.setVisible(true);
+    }//GEN-LAST:event_clistamedicoMenuActionPerformed
+
+    private void clistapacienteMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clistapacienteMenuActionPerformed
+        lp.setVisible(true);
+    }//GEN-LAST:event_clistapacienteMenuActionPerformed
+
+    private void menuListaSetoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuListaSetoresActionPerformed
+        ls.setVisible(true);
+    }//GEN-LAST:event_menuListaSetoresActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -530,6 +587,7 @@ public class GerenteUI extends javax.swing.JFrame {
     private javax.swing.JMenuItem menuEditarValorConsulta;
     private javax.swing.JMenuItem menuListaConsulta;
     private javax.swing.JMenuItem menuListaSetores;
+    private javax.swing.JMenuItem menuListarGerente;
     private javax.swing.JMenu sairMenu;
     // End of variables declaration//GEN-END:variables
 }

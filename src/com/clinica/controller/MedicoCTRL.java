@@ -8,9 +8,13 @@ package com.clinica.controller;
 import com.clinica.dal.Conexao;
 import com.clinica.dal.MedicoDAL;
 import com.clinica.model.Medico;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -35,6 +39,19 @@ public class MedicoCTRL {
         }
 
     }
+    
+    private static String stringHexa(byte[] bytes) {
+        StringBuilder s = new StringBuilder();
+        for (int i = 0; i < bytes.length; i++) {
+            int parteAlta = ((bytes[i] >> 4) & 0xf) << 4;
+            int parteBaixa = bytes[i] & 0xf;
+            if (parteAlta == 0) {
+                s.append('0');
+            }
+            s.append(Integer.toHexString(parteAlta | parteBaixa));
+        }
+        return s.toString();
+    }
 
     public void addMedico(String crm, String cpf, String rg, String nome, String data_nasc, String email, String sexo, String cTrabalho, String pis, String salario, String cargo, String setor, String endereco, String bairro, String numero, int cep, String celular, String telefone, String fone3, String especialidade, String login, String senha) throws SQLException {
         m = new Medico();
@@ -42,7 +59,16 @@ public class MedicoCTRL {
 
         String pis0 = "0";
 
-        int hashCodeSenha = senha.hashCode();
+        MessageDigest md5 = null;
+        try {
+            md5 = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(AtendenteCTRL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        md5.update(senha.getBytes());
+        byte[] hashMd5 = md5.digest();
+        
+        String senhaF = stringHexa(hashMd5);
 
         m.setCrm(Long.parseLong(crm));
         m.setCpf(Long.parseLong(cpf));
@@ -63,7 +89,7 @@ public class MedicoCTRL {
         m.getTelefone().setCelular(celular);
         m.setEspecialidade(especialidade);
         m.setLogin(login);
-        m.setSenha(hashCodeSenha + "");
+        m.setSenha(senhaF);
 
         if (setor.equals("")) {
             m.getSetor().setId(0);
@@ -140,9 +166,17 @@ public class MedicoCTRL {
         md.update(m);
 
     }
+    
+    public void pTable () throws SQLException{
+        md = new MedicoDAL(con);
+        md.PopularJTable("SELECT id_funcionario, rg, nome, data_nasc, sexo  FROM Funcionarios where cargo = 'MEDICO'");
+    }
 
     public String returnEspecialidade() {
         return m.getEspecialidade();
+    }
+    public String returnRG(){
+        return m.getRg();
     }
 
 }

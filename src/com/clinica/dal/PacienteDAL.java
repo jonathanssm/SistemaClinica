@@ -6,11 +6,13 @@
 package com.clinica.dal;
 
 import com.clinica.model.Paciente;
+import com.clinica.view.ListarPacientesUI;
 import java.awt.HeadlessException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -200,7 +202,7 @@ public class PacienteDAL {
                 ps3.execute();
 
                 JOptionPane.showMessageDialog(null, "Deletado");
-            }else {
+            } else {
                 JOptionPane.showMessageDialog(null, "Paciente não existe");
             }
 
@@ -240,6 +242,36 @@ public class PacienteDAL {
             System.out.println("Desconectado");
         }
 
+    }
+    
+    public void PopularJTable(String sql) throws SQLException {
+
+        try {
+            PreparedStatement banco = con.getPreparedStatement(sql);
+            banco.execute(); // cria o vetor
+
+            ResultSet resultado = banco.executeQuery();
+
+            DefaultTableModel model = (DefaultTableModel) ListarPacientesUI.jTable1.getModel();
+            model.setNumRows(0);
+
+            while (resultado.next()) {
+                model.addRow(new Object[]{
+                    //retorna os dados da tabela do BD, cada campo e um coluna.
+                    resultado.getLong("cpf"),
+                    resultado.getString("rg"),
+                    resultado.getString("nome"),
+                    resultado.getString("data_nasc"),
+                    resultado.getString("sexo")
+                    
+                });
+            }
+        } catch (SQLException ex) {
+            System.out.println("o erro foi " + ex);
+        } finally {
+            con.getConnection().close();
+            System.out.println("Desconectado");
+        }
     }
 
 }

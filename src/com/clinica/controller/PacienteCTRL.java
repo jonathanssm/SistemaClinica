@@ -45,8 +45,16 @@ public class PacienteCTRL {
         p.setRg(rg);
         p.setCpf(cpf);
         p.setData_nasc(data_nasc);
-        p.setpSaude(pSaude);
-        p.setEmail(email);
+        if (pSaude.equals("")) {
+            p.setpSaude(null);
+        }else {
+            p.setpSaude(pSaude);
+        }
+        if (email.equals("")) {
+            p.setEmail(null);
+        }else {
+            p.setEmail(email);
+        }
         p.setSexo(sexo);
         p.getTelefone().setCelular(celular);
         p.getEndereco().setEndereco(endereco);
@@ -55,7 +63,7 @@ public class PacienteCTRL {
         p.getEndereco().setCep(CEP);
 
         if (telefone.equals("")) {
-            telefone = null;
+            p.getTelefone().setTelefone(null);
         } else {
             p.getTelefone().setTelefone(telefone);
         }
@@ -118,6 +126,11 @@ public class PacienteCTRL {
         
         p.setCpf(cpf);
         pd.search(p);
+    }
+    
+    public void pTable () throws SQLException{
+        pd = new PacienteDAL(con);
+        pd.PopularJTable("SELECT cpf, rg, nome, data_nasc, sexo  FROM Pacientes");
     }
     
     public String returnRG (){

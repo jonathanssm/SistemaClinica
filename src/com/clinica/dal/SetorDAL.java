@@ -6,10 +6,12 @@
 package com.clinica.dal;
 
 import com.clinica.model.Setor;
+import com.clinica.view.ListarSetoresUI;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -29,13 +31,24 @@ public class SetorDAL {
         try {
 
             String sql = "insert into Setores (id_setor, nome) values (?, ?)";
+            String sql2 = "select id_setor from Setores where id_setor = ?";
 
             PreparedStatement stm = con.getPreparedStatement(sql);
+            PreparedStatement stm2 = con.getPreparedStatement(sql2);
 
             stm.setInt(1, s.getId());
             stm.setString(2, s.getNome());
 
-            stm.execute();
+            stm2.setInt(1, s.getId());
+
+            ResultSet rs = stm2.executeQuery();
+
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "Setor já existe !");
+            } else {
+                stm.execute();
+                JOptionPane.showMessageDialog(null, "Cadastrado");
+            }
 
         } catch (SQLException e) {
             e.getStackTrace();
@@ -106,4 +119,31 @@ public class SetorDAL {
 
     }
 
+    public void PopularJTable(String sql) throws SQLException {
+
+        try {
+            PreparedStatement banco = con.getPreparedStatement(sql);
+            banco.execute(); // cria o vetor
+
+            ResultSet resultado = banco.executeQuery();
+
+            DefaultTableModel model = (DefaultTableModel) ListarSetoresUI.jTable1.getModel();
+            model.setNumRows(0);
+
+            while (resultado.next()) {
+                model.addRow(new Object[]{
+                    //retorna os dados da tabela do BD, cada campo e um coluna.
+                    resultado.getLong("id_setor"),
+                    resultado.getString("nome")
+                });
+            }
+        } catch (SQLException ex) {
+            System.out.println("o erro foi " + ex);
+        } finally {
+            con.getConnection().close();
+            System.out.println("Desconectado");
+        }
+
+    }
+    
 }

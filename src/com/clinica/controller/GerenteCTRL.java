@@ -8,9 +8,13 @@ package com.clinica.controller;
 import com.clinica.dal.Conexao;
 import com.clinica.dal.GerenteDAL;
 import com.clinica.model.Gerente;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -36,13 +40,36 @@ public class GerenteCTRL {
 
     }
 
+    private static String stringHexa(byte[] bytes) {
+        StringBuilder s = new StringBuilder();
+        for (int i = 0; i < bytes.length; i++) {
+            int parteAlta = ((bytes[i] >> 4) & 0xf) << 4;
+            int parteBaixa = bytes[i] & 0xf;
+            if (parteAlta == 0) {
+                s.append('0');
+            }
+            s.append(Integer.toHexString(parteAlta | parteBaixa));
+        }
+        return s.toString();
+    }
+
     public void add(String cpf, String rg, String nome, String data_nasc, String email, String sexo, String cTrabalho, String pis, String salario, String cargo, String setor, String endereco, String bairro, String numero, String cep, String celular, String telefone, String login, String senha) throws SQLException {
 
         g = new Gerente();
         gd = new GerenteDAL(con);
-        
+
         String pis0 = "0";
-        int hashSenha = senha.hashCode();
+
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(AtendenteCTRL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        md.update(senha.getBytes());
+        byte[] hashMd5 = md.digest();
+        
+        String senhaF = stringHexa(hashMd5);
 
         g.setCpf(Long.parseLong(cpf));
         g.setRg(rg);
@@ -57,7 +84,7 @@ public class GerenteCTRL {
         g.getEndereco().setCep(Integer.parseInt(cep));
         g.getTelefone().setCelular(celular);
         g.setLogin(login);
-        g.setSenha(hashSenha+"");
+        g.setSenha(senhaF);
 
         if (setor.equals("")) {
             g.getSetor().setId(0);
@@ -79,7 +106,7 @@ public class GerenteCTRL {
         } else {
             g.setSalario(Double.parseDouble(salario));
         }
-        
+
         if (telefone.equals("")) {
             g.getTelefone().setTelefone(null);
         } else {
@@ -94,10 +121,15 @@ public class GerenteCTRL {
 
         g = new Gerente();
         gd = new GerenteDAL(con);
-        
+
         g.setCpf(Long.parseLong(cpf));
         gd.delete(g);
-        
+
+    }
+    
+    public void pTable () throws SQLException{
+        gd = new GerenteDAL(con);
+        gd.PopularJTable("SELECT id_funcionario, rg, nome, data_nasc, sexo  FROM Funcionarios where cargo = 'GERENTE'");
     }
 
 }

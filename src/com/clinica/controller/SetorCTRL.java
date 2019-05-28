@@ -54,6 +54,11 @@ public class SetorCTRL {
         sd.search(s);
 
     }
+    
+    public void pTable () throws SQLException{
+        sd = new SetorDAL(con);
+        sd.PopularJTable("SELECT id_setor, nome FROM Setores");
+    }
 
     public int retornoID() {
         return s.getId();

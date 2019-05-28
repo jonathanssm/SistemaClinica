@@ -6,11 +6,13 @@
 package com.clinica.dal;
 
 import com.clinica.model.Medico;
+import com.clinica.view.ListarMédicosUI;
 import com.mysql.cj.protocol.Resultset;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -107,7 +109,7 @@ public class MedicoDAL {
             ps7.setInt(1, m.getSetor().getId());
 
             ps8.setLong(1, m.getCpf());
-            
+
             ps9.setLong(1, m.getCrm());
             ps9.setString(2, m.getEspecialidade());
             ps9.setLong(3, m.getCpf());
@@ -206,6 +208,36 @@ public class MedicoDAL {
             System.out.println("Desconectado");
         }
 
+    }
+
+    public void PopularJTable(String sql) throws SQLException {
+
+        try {
+            PreparedStatement banco = con.getPreparedStatement(sql);
+            banco.execute(); // cria o vetor
+
+            ResultSet resultado = banco.executeQuery();
+
+            DefaultTableModel model = (DefaultTableModel) ListarMédicosUI.jTable1.getModel();
+            model.setNumRows(0);
+
+            while (resultado.next()) {
+                model.addRow(new Object[]{
+                    //retorna os dados da tabela do BD, cada campo e um coluna.
+                    resultado.getLong("id_funcionario"),
+                    resultado.getString("rg"),
+                    resultado.getString("nome"),
+                    resultado.getString("data_nasc"),
+                    resultado.getString("sexo")
+
+                });
+            }
+        } catch (SQLException ex) {
+            System.out.println("o erro foi " + ex);
+        } finally {
+            con.getConnection().close();
+            System.out.println("Desconectado");
+        }
     }
 
 }
