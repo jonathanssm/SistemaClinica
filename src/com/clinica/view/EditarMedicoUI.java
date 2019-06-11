@@ -141,44 +141,19 @@ public class EditarMedicoUI extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
-        try {
-            txtCTrabalho.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("########")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        txtCTrabalho.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
-        try {
-            txtPIS.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###########")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        txtPIS.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
-        txtSalario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#,##0.00"))));
+        txtSalario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat(""))));
 
-        try {
-            txtTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)####-####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        txtTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
-        try {
-            txtCelular.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#-####-####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        txtCelular.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
-        try {
-            txtCEP.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        txtCEP.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
         btnAtualizar.setText("ATUALIZAR");
-        btnAtualizar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAtualizarMouseClicked(evt);
-            }
-        });
         btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAtualizarActionPerformed(evt);
@@ -386,36 +361,6 @@ public class EditarMedicoUI extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAtualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAtualizarMouseClicked
-        /*String sexo = null;
-        String senha = new String(txtSenha.getPassword());
-
-        if (txtSetor.getText().isEmpty()) {
-            txtSetor.setText(null);
-        }
-
-        if (boxSexo.getSelectedItem().toString().equalsIgnoreCase("masculino")) {
-            sexo = "M";
-        }
-
-        if (boxSexo.getSelectedItem().toString().equalsIgnoreCase("feminino")) {
-            sexo = "F";
-        }
-
-        if (boxSexo.getSelectedItem().toString().equalsIgnoreCase("outros")) {
-            sexo = "O";
-        }
-
-        if (boxSexo.getSelectedItem().toString().equalsIgnoreCase("*sexo") || txtNome.getText().isEmpty() || txtRG.getText().isEmpty() || txtDNASC.getText().isEmpty()
-                || txtEndereco.getText().isEmpty() || txtBairro.getText().isEmpty() || txtNumero.getText().isEmpty() || txtCEP.getText().isEmpty() || txtCelular.getText().isEmpty() || txtCRM.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Todos os campos com '*' são obrigatorios!");
-        } else {
-
-            m = new MedicoCTRL();
-            l = new LoginCTRL();
-        }*/
-    }//GEN-LAST:event_btnAtualizarMouseClicked
-
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
         if (txtCRM.getText().isEmpty()) {
@@ -432,26 +377,26 @@ public class EditarMedicoUI extends javax.swing.JFrame {
         }
 
         if (!txtEspecialidade.getText().isEmpty()) {
-            //txtBairro.setEnabled(true);
-            //txtCEP.setEnabled(true);
-            //txtCelular.setEnabled(true);
+            txtBairro.setEnabled(true);
+            txtCEP.setEnabled(true);
+            txtCelular.setEnabled(true);
             txtDNASC.setEnabled(true);
-            //txtEndereco.setEnabled(true);
+            txtEndereco.setEnabled(true);
             txtNome.setEnabled(true);
-            //txtNumero.setEnabled(true);
+            txtNumero.setEnabled(true);
             txtRG.setEnabled(true);
-            //txtTelefone.setEnabled(true);
+            txtTelefone.setEnabled(true);
             btnAtualizar.setEnabled(true);
             boxSexo.setEnabled(true);
             txtEspecialidade.setEnabled(true);
-            //txtLogin.setEnabled(true);
-            //txtSenha.setEnabled(true);
+            txtLogin.setEnabled(true);
+            txtSenha.setEnabled(true);
             txtCTrabalho.setEnabled(true);
             txtPIS.setEnabled(true);
             txtSalario.setEnabled(true);
-            //txtSetor.setEnabled(true);
+            txtSetor.setEnabled(true);
             txtEmail.setEnabled(true);
-            //txtFone_3.setEnabled(true);
+            txtFone_3.setEnabled(true);
             btnAtualizar.setEnabled(true);
             btnBuscar.setEnabled(false);
             txtCRM.setEnabled(false);
@@ -460,43 +405,53 @@ public class EditarMedicoUI extends javax.swing.JFrame {
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
 
-        if (txtNome.getText().isEmpty() || txtRG.getText().isEmpty() || txtDNASC.getText().isEmpty() || boxSexo.getSelectedItem().toString().equalsIgnoreCase("*sexo")) {
+        String sexo = boxSexo.getSelectedItem().toString();
+        String senha = new String(txtSenha.getPassword());
+
+        if (txtSetor.getText().isEmpty()) {
+            txtSetor.setText(null);
+        }
+
+        if (boxSexo.getSelectedItem().toString().equalsIgnoreCase("*sexo") || txtNome.getText().isEmpty() || txtRG.getText().isEmpty() || txtDNASC.getText().isEmpty()
+                || txtEndereco.getText().isEmpty() || txtBairro.getText().isEmpty() || txtNumero.getText().isEmpty() || txtCEP.getText().isEmpty() || txtCelular.getText().isEmpty() || txtCRM.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Todos os campos com '*' são obrigatorios!");
         } else {
 
             m = new MedicoCTRL();
 
             try {
-                m.update(txtRG.getText(), txtNome.getText(), txtDNASC.getText(), txtEmail.getText(), boxSexo.getSelectedItem().toString(), txtCTrabalho.getText(), txtPIS.getText(), txtSalario.getText());
+                m.update(txtCRM.getText(), txtRG.getText(), txtNome.getText(), txtDNASC.getText(), txtEmail.getText(), sexo, txtCTrabalho.getText(), txtPIS.getText(), txtSalario.getText().replace(",", ""),
+                        txtSetor.getText(), txtCelular.getText(), txtTelefone.getText(), txtFone_3.getText(), txtEndereco.getText(), txtBairro.getText(), txtNumero.getText(),
+                        txtCEP.getText(), txtLogin.getText().trim(), senha, txtEspecialidade.getText());
             } catch (SQLException ex) {
-                Logger.getLogger(EditarMedicoUI.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex);
             }
 
             if (!txtCRM.isEnabled()) {
-                //txtBairro.setEnabled(false);
-                //txtCEP.setEnabled(false);
-                //txtCelular.setEnabled(false);
+                txtBairro.setEnabled(false);
+                txtCEP.setEnabled(false);
+                txtCelular.setEnabled(false);
                 txtDNASC.setEnabled(false);
-                //txtEndereco.setEnabled(false);
+                txtEndereco.setEnabled(false);
                 txtNome.setEnabled(false);
-                //txtNumero.setEnabled(false);
+                txtNumero.setEnabled(false);
                 txtRG.setEnabled(false);
-                //txtTelefone.setEnabled(false);
+                txtTelefone.setEnabled(false);
                 btnAtualizar.setEnabled(false);
                 boxSexo.setEnabled(false);
                 txtEspecialidade.setEnabled(false);
-                //txtLogin.setEnabled(false);
-                //txtSenha.setEnabled(false);
+                txtLogin.setEnabled(false);
+                txtSenha.setEnabled(false);
                 txtCTrabalho.setEnabled(false);
                 txtPIS.setEnabled(false);
                 txtSalario.setEnabled(false);
-                //txtSetor.setEnabled(false);
+                txtSetor.setEnabled(false);
                 txtEmail.setEnabled(false);
-                //txtFone_3.setEnabled(false);
+                txtFone_3.setEnabled(false);
                 btnAtualizar.setEnabled(false);
                 btnBuscar.setEnabled(true);
                 txtCRM.setEnabled(true);
-                
+
                 txtRG.setText("");
                 txtNome.setText("");
                 txtDNASC.setText("");
@@ -506,10 +461,11 @@ public class EditarMedicoUI extends javax.swing.JFrame {
                 txtSalario.setText("");
                 txtEmail.setText("");
                 txtCRM.setText("");
+                txtSetor.setText("");
+                
             }
 
         }
-
     }//GEN-LAST:event_btnAtualizarActionPerformed
 
     /**

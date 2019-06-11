@@ -44,15 +44,12 @@ public class DeletarAtendenteGerenteUI extends javax.swing.JFrame {
         btnDeletar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Deletar A/G");
         setResizable(false);
 
         jLabel1.setText("CPF:");
 
-        try {
-            txtCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###########")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
+        txtCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
         btnDeletar.setText("DELETAR");
         btnDeletar.addActionListener(new java.awt.event.ActionListener() {
@@ -92,7 +89,7 @@ public class DeletarAtendenteGerenteUI extends javax.swing.JFrame {
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
         
-        if (txtCPF.getText().isEmpty() || txtCPF.getText().length() < 11) {
+        if (txtCPF.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Digite um cpf valido");
         } else {
             

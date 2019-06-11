@@ -290,9 +290,8 @@ public class EditarPacienteUI extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(EditarPacienteUI.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-
-        if (!txtCPF.isEnabled()) {
+            
+            if (!txtCPF.isEnabled()) {
             txtBairro.setEnabled(false);
             txtCEP.setEnabled(false);
             txtCelular.setEnabled(false);
@@ -309,6 +308,8 @@ public class EditarPacienteUI extends javax.swing.JFrame {
             txtCPF.setEnabled(true);
             btnBuscar.setEnabled(true);
             txtCPF.setText("");
+        }
+            
         }
 
     }//GEN-LAST:event_btnAtualizarActionPerformed

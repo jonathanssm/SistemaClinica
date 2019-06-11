@@ -14,9 +14,10 @@ public class TelaAtendente extends javax.swing.JFrame {
     /**
      * Creates new form TelaAtendente
      */
-    
     private LoginUI l;
-    
+
+    private static CadastroPacienteUI cp = new CadastroPacienteUI();
+
     public TelaAtendente() {
         initComponents();
     }
@@ -43,6 +44,11 @@ public class TelaAtendente extends javax.swing.JFrame {
         CadastrarPaciente.setBackground(new java.awt.Color(255, 255, 255));
         CadastrarPaciente.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         CadastrarPaciente.setText("Cadastar Paciente");
+        CadastrarPaciente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CadastrarPacienteActionPerformed(evt);
+            }
+        });
 
         AgendaMedico.setBackground(new java.awt.Color(255, 255, 255));
         AgendaMedico.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
@@ -105,6 +111,10 @@ public class TelaAtendente extends javax.swing.JFrame {
         l.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_SairActionPerformed
+
+    private void CadastrarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastrarPacienteActionPerformed
+        cp.setVisible(true);
+    }//GEN-LAST:event_CadastrarPacienteActionPerformed
 
     /**
      * @param args the command line arguments

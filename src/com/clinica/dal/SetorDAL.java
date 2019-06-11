@@ -119,6 +119,45 @@ public class SetorDAL {
 
     }
 
+    public void delete(Setor s) throws SQLException {
+
+        String sql = "update Funcionarios set Setores_id_setor = null where Setores_id_setor = ?";
+        String sql2 = "delete from Setores where id_setor = ?";
+        String sql3 = "select id_setor from Setores where id_setor = ?";
+
+        PreparedStatement ps = con.getPreparedStatement(sql);
+        PreparedStatement ps2 = con.getPreparedStatement(sql2);
+        PreparedStatement ps3 = con.getPreparedStatement(sql3);
+
+        try {
+
+            ps.setInt(1, s.getId());
+            ps2.setInt(1, s.getId());
+            ps3.setInt(1, s.getId());
+
+            ResultSet rs = ps3.executeQuery();
+
+            if (rs.next()) {
+                ps.execute();
+                ps2.execute();
+
+                con.commit();
+                JOptionPane.showMessageDialog(null, "Setor deletado");
+            } else {
+                JOptionPane.showMessageDialog(null, "Setor não existe");
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+            System.out.println("rollBack");
+            con.getConnection().rollback();
+        } finally {
+            System.out.println("Desconectado");
+            con.getConnection().close();
+        }
+
+    }
+
     public void PopularJTable(String sql) throws SQLException {
 
         try {
@@ -145,5 +184,5 @@ public class SetorDAL {
         }
 
     }
-    
+
 }

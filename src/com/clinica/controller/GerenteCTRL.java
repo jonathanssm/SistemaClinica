@@ -52,14 +52,8 @@ public class GerenteCTRL {
         }
         return s.toString();
     }
-
-    public void add(String cpf, String rg, String nome, String data_nasc, String email, String sexo, String cTrabalho, String pis, String salario, String cargo, String setor, String endereco, String bairro, String numero, String cep, String celular, String telefone, String login, String senha) throws SQLException {
-
-        g = new Gerente();
-        gd = new GerenteDAL(con);
-
-        String pis0 = "0";
-
+    
+    private String toHash(String senha){
         MessageDigest md = null;
         try {
             md = MessageDigest.getInstance("MD5");
@@ -69,7 +63,17 @@ public class GerenteCTRL {
         md.update(senha.getBytes());
         byte[] hashMd5 = md.digest();
         
-        String senhaF = stringHexa(hashMd5);
+        return stringHexa(hashMd5);
+    }
+
+    public void add(String cpf, String rg, String nome, String data_nasc, String email, String sexo, String cTrabalho, String pis, String salario, String cargo, String setor, String endereco, String bairro, String numero, String cep, String celular, String telefone, String login, String senha) throws SQLException {
+
+        g = new Gerente();
+        gd = new GerenteDAL(con);
+
+        String pis0 = "0";
+
+        String senhaF = toHash(senha);
 
         g.setCpf(Long.parseLong(cpf));
         g.setRg(rg);
@@ -126,8 +130,74 @@ public class GerenteCTRL {
         gd.delete(g);
 
     }
+
+    public boolean search(String cpf) throws SQLException {
+        g = new Gerente();
+        gd = new GerenteDAL(con);
+
+        g.setCpf(Long.parseLong(cpf));
+        if (gd.search(g)) {
+            return true;
+        }
+        return false;
+    }
     
-    public void pTable () throws SQLException{
+    public void update(String cpf, String rg, String nome, String data_nasc, String email, String sexo, String cTrabalho, String pis, String salario, String cargo, String setor, String endereco, String bairro, String numero, String cep, String celular, String telefone, String login, String senha) throws SQLException{
+        
+        g = new Gerente();
+        gd = new GerenteDAL(con);
+
+        String pis0 = "0";
+
+        String senhaF = toHash(senha);
+
+        g.setCpf(Long.parseLong(cpf));
+        g.setRg(rg);
+        g.setNome(nome);
+        g.setData_nasc(data_nasc);
+        g.setEmail(email);
+        g.setSexo(sexo);
+        g.setCargo(cargo);
+        g.getEndereco().setEndereco(endereco);
+        g.getEndereco().setBairro(bairro);
+        g.getEndereco().setNumero(numero);
+        g.getEndereco().setCep(Integer.parseInt(cep));
+        g.getTelefone().setCelular(celular);
+        g.setLogin(login);
+        g.setSenha(senhaF);
+
+        if (setor.equals("")) {
+            g.getSetor().setId(0);
+        } else {
+            g.getSetor().setId(Integer.parseInt(setor));
+        }
+        if (cTrabalho.equals("")) {
+            g.setCarteiraTrabalho(0);
+        } else {
+            g.setCarteiraTrabalho(Integer.parseInt(cTrabalho));
+        }
+        if (pis.equals("")) {
+            g.setPis(Long.parseLong(pis0));
+        } else {
+            g.setPis(Long.parseLong(pis));
+        }
+        if (salario.equals("")) {
+            g.setSalario(0);
+        } else {
+            g.setSalario(Double.parseDouble(salario));
+        }
+
+        if (telefone.equals("")) {
+            g.getTelefone().setTelefone(null);
+        } else {
+            g.getTelefone().setTelefone(telefone);
+        }
+        
+        gd.update(g);
+        
+    }
+
+    public void pTable() throws SQLException {
         gd = new GerenteDAL(con);
         gd.PopularJTable("SELECT id_funcionario, rg, nome, data_nasc, sexo  FROM Funcionarios where cargo = 'GERENTE'");
     }

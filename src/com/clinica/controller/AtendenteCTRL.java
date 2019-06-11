@@ -39,7 +39,7 @@ public class AtendenteCTRL {
         }
 
     }
-    
+
     private static String stringHexa(byte[] bytes) {
         StringBuilder s = new StringBuilder();
         for (int i = 0; i < bytes.length; i++) {
@@ -53,13 +53,7 @@ public class AtendenteCTRL {
         return s.toString();
     }
 
-    public void add(Long cpf, String rg, String nome, String data_nasc, String email, String sexo, String cTrabalho, String pis, String salario, String cargo, String setor, String endereco, String bairro, String numero, int cep, String celular, String telefone, String login, String senha) throws SQLException {
-
-        a = new Atendente();
-        ad = new AtendenteDAL(con);
-
-        String pis0 = "0";
-
+    private String toHash(String senha) {
         MessageDigest md = null;
         try {
             md = MessageDigest.getInstance("MD5");
@@ -68,8 +62,18 @@ public class AtendenteCTRL {
         }
         md.update(senha.getBytes());
         byte[] hashMd5 = md.digest();
-        
-        String senhaF = stringHexa(hashMd5);
+
+        return stringHexa(hashMd5);
+    }
+
+    public void add(Long cpf, String rg, String nome, String data_nasc, String email, String sexo, String cTrabalho, String pis, String salario, String cargo, String setor, String endereco, String bairro, String numero, int cep, String celular, String telefone, String login, String senha) throws SQLException {
+
+        a = new Atendente();
+        ad = new AtendenteDAL(con);
+
+        String pis0 = "0";
+
+        String senhaF = toHash(senha);
 
         a.setCpf(cpf);
         a.setRg(rg);
@@ -123,8 +127,76 @@ public class AtendenteCTRL {
         ad.delete(a);
 
     }
-    
-    public void pTable () throws SQLException{
+
+    public boolean search(String cpf) throws SQLException {
+
+        a = new Atendente();
+        ad = new AtendenteDAL(con);
+
+        a.setCpf(Long.parseLong(cpf));
+
+        if (ad.searchAtendente(a)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public void update(Long cpf, String rg, String nome, String data_nasc, String email, String sexo, String cTrabalho, String pis, String salario, String cargo, String setor, String endereco, String bairro, String numero, int cep, String celular, String telefone, String login, String senha) throws SQLException {
+
+        a = new Atendente();
+        ad = new AtendenteDAL(con);
+
+        String pis0 = "0";
+
+        String senhaF = toHash(senha);
+
+        a.setCpf(cpf);
+        a.setRg(rg);
+        a.setNome(nome);
+        a.setData_nasc(data_nasc);
+        a.setEmail(email);
+        a.setSexo(sexo);
+        a.setCargo(cargo);
+        if (setor.equals("")) {
+            a.getSetor().setId(0);
+        } else {
+            a.getSetor().setId(Integer.parseInt(setor));
+        }
+        if (cTrabalho.equals("")) {
+            a.setCarteiraTrabalho(0);
+        } else {
+            a.setCarteiraTrabalho(Integer.parseInt(cTrabalho));
+        }
+        if (pis.equals("")) {
+            a.setPis(Long.parseLong(pis0));
+        } else {
+            a.setPis(Long.parseLong(pis));
+        }
+        if (salario.equals("")) {
+            a.setSalario(0);
+        } else {
+            a.setSalario(Double.parseDouble(salario));
+        }
+        a.getEndereco().setEndereco(endereco);
+        a.getEndereco().setBairro(bairro);
+        a.getEndereco().setNumero(numero);
+        a.getEndereco().setCep(cep);
+        a.getTelefone().setCelular(celular);
+        a.setLogin(login);
+        a.setSenha(senhaF);
+        if (telefone.equals("")) {
+            a.getTelefone().setTelefone(null);
+        } else {
+            a.getTelefone().setTelefone(telefone);
+        }
+        
+        ad.update(a);
+
+    }
+
+    public void pTable() throws SQLException {
         ad = new AtendenteDAL(con);
         ad.PopularJTable("SELECT id_funcionario, rg, nome, data_nasc, sexo  FROM Funcionarios where cargo = 'ATENDENTE'");
     }

@@ -55,6 +55,14 @@ public class SetorCTRL {
 
     }
     
+    public void delete(String id) throws SQLException{
+        s = new Setor();
+        sd = new SetorDAL(con);
+        
+        s.setId(Integer.parseInt(id));
+        sd.delete(s);
+    }
+    
     public void pTable () throws SQLException{
         sd = new SetorDAL(con);
         sd.PopularJTable("SELECT id_setor, nome FROM Setores");

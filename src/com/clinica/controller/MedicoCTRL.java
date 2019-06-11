@@ -39,7 +39,7 @@ public class MedicoCTRL {
         }
 
     }
-    
+
     private static String stringHexa(byte[] bytes) {
         StringBuilder s = new StringBuilder();
         for (int i = 0; i < bytes.length; i++) {
@@ -53,12 +53,7 @@ public class MedicoCTRL {
         return s.toString();
     }
 
-    public void addMedico(String crm, String cpf, String rg, String nome, String data_nasc, String email, String sexo, String cTrabalho, String pis, String salario, String cargo, String setor, String endereco, String bairro, String numero, int cep, String celular, String telefone, String fone3, String especialidade, String login, String senha) throws SQLException {
-        m = new Medico();
-        md = new MedicoDAL(con);
-
-        String pis0 = "0";
-
+    private String toHash(String senha) {
         MessageDigest md5 = null;
         try {
             md5 = MessageDigest.getInstance("MD5");
@@ -67,8 +62,17 @@ public class MedicoCTRL {
         }
         md5.update(senha.getBytes());
         byte[] hashMd5 = md5.digest();
-        
-        String senhaF = stringHexa(hashMd5);
+
+        return stringHexa(hashMd5);
+    }
+
+    public void addMedico(String crm, String cpf, String rg, String nome, String data_nasc, String email, String sexo, String cTrabalho, String pis, String salario, String cargo, String setor, String endereco, String bairro, String numero, int cep, String celular, String telefone, String fone3, String especialidade, String login, String senha) throws SQLException {
+        m = new Medico();
+        md = new MedicoDAL(con);
+
+        String pis0 = "0";
+
+        String senhaF = toHash(senha);
 
         m.setCrm(Long.parseLong(crm));
         m.setCpf(Long.parseLong(cpf));
@@ -136,15 +140,24 @@ public class MedicoCTRL {
 
     }
 
-    public void update(String rg, String nome, String dnasc, String email, String sexo, String ctrab, String pis, String salario) throws SQLException {
+    public void update(String crm, String rg, String nome, String dnasc, String email, String sexo, String ctrab, String pis, String salario, String setor, String cel, String tel, String fone, String end, String bairro, String numero, String cep, String user, String password, String esp) throws SQLException {
 
         m = new Medico();
         md = new MedicoDAL(con);
 
+        String senhaF = toHash(password);
+        String pis0 = "0";
+
+        m.setCrm(Long.parseLong(crm));
         m.setRg(rg);
         m.setNome(nome);
         m.setData_nasc(dnasc);
-        m.setEmail(email);
+        
+        if(email.equals("")){
+            m.setEmail(null);
+        }else{
+            m.setEmail(email);
+        }
 
         if (sexo.equalsIgnoreCase("masculino")) {
             sexo = "M";
@@ -159,24 +172,72 @@ public class MedicoCTRL {
         }
 
         m.setSexo(sexo);
-        m.setCarteiraTrabalho(Integer.parseInt(ctrab));
-        m.setPis(Long.parseLong(pis));
+        //m.setCarteiraTrabalho(Integer.parseInt(ctrab));
+        //m.setPis(Long.parseLong(pis));
         m.setSalario(Double.parseDouble(salario));
+        //m.getSetor().setId(Integer.parseInt(setor));
+        m.getTelefone().setCelular(cel);
+        m.getEndereco().setEndereco(end);
+        m.getEndereco().setBairro(bairro);
+        m.getEndereco().setNumero(numero);
+        m.getEndereco().setCep(Integer.parseInt(cep));
+        m.setLogin(user);
+        m.setSenha(senhaF);
+        m.setEspecialidade(esp);
+
+        if (setor.equals("")) {
+            m.getSetor().setId(0);
+        } else {
+            m.getSetor().setId(Integer.parseInt(setor));
+        }
+        if (ctrab.equals("")) {
+            m.setCarteiraTrabalho(0);
+        } else {
+            m.setCarteiraTrabalho(Integer.parseInt(ctrab));
+        }
+        if (pis.equals("")) {
+            m.setPis(Long.parseLong(pis0));
+        } else {
+            m.setPis(Long.parseLong(pis));
+        }
+        if (salario.equals("")) {
+            m.setSalario(0);
+        } else {
+            m.setSalario(Double.parseDouble(salario));
+        }
+        if (tel.equals("")) {
+            m.getTelefone().setTelefone(null);
+        } else {
+            m.getTelefone().setTelefone(tel);
+        }
+        if (fone.equals("")) {
+            m.getTelefone().setTelefone(null);
+        } else {
+            m.getTelefone().setTelefone(fone);
+        }
 
         md.update(m);
 
     }
-    
-    public void pTable () throws SQLException{
+
+    public void delete(String cpf) throws SQLException {
+
+        m = new Medico();
+        md = new MedicoDAL(con);
+
+        m.setCpf(Long.parseLong(cpf));
+
+        md.delete(m);
+
+    }
+
+    public void pTable() throws SQLException {
         md = new MedicoDAL(con);
         md.PopularJTable("SELECT id_funcionario, rg, nome, data_nasc, sexo  FROM Funcionarios where cargo = 'MEDICO'");
     }
 
     public String returnEspecialidade() {
         return m.getEspecialidade();
-    }
-    public String returnRG(){
-        return m.getRg();
     }
 
 }

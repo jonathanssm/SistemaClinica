@@ -5,22 +5,28 @@
  */
 package com.clinica.view;
 
-import com.clinica.controller.PacienteCTRL;
+import com.clinica.controller.AtendenteCTRL;
+import com.clinica.controller.GerenteCTRL;
+import com.clinica.controller.MedicoCTRL;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Jonathan
  */
-public class DeletarPacienteUI extends javax.swing.JFrame {
+public class DeletarMedicoUI extends javax.swing.JFrame {
 
     /**
-     * Creates new form DeletarPacienteUI
+     * Creates new form DeletarAtendenteGerenteUI
      */
+    String tipo;
     
-    private PacienteCTRL p;
+    private MedicoCTRL m;
     
-    public DeletarPacienteUI() {
+    public DeletarMedicoUI() {
         initComponents();
     }
 
@@ -38,7 +44,7 @@ public class DeletarPacienteUI extends javax.swing.JFrame {
         btnDeletar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Deletar Paciente");
+        setTitle("Deletar Médico");
         setResizable(false);
 
         jLabel1.setText("CPF:");
@@ -57,24 +63,24 @@ public class DeletarPacienteUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnDeletar)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(jLabel1)
-                        .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                        .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(57, 57, 57)
+                .addGap(62, 62, 62)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(74, 74, 74)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                 .addComponent(btnDeletar)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -83,21 +89,19 @@ public class DeletarPacienteUI extends javax.swing.JFrame {
 
     private void btnDeletarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarActionPerformed
         
-        if(txtCPF.getText().isEmpty()){
+        if (txtCPF.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Digite um cpf valido");
-        }else{
+        } else {
+            
+            m = new MedicoCTRL();
             
             try {
-                p = new PacienteCTRL();
-                
-                p.delete(txtCPF.getText());
-            } catch (Exception e) {
-            } finally {
-                txtCPF.setText("");
+                m.delete(txtCPF.getText());
+            } catch (SQLException ex) {
+                Logger.getLogger(DeletarMedicoUI.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
         }
-        
+
     }//GEN-LAST:event_btnDeletarActionPerformed
 
     /**
@@ -117,20 +121,21 @@ public class DeletarPacienteUI extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DeletarPacienteUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeletarMedicoUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DeletarPacienteUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeletarMedicoUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DeletarPacienteUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeletarMedicoUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DeletarPacienteUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DeletarMedicoUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new DeletarPacienteUI().setVisible(true);
+                new DeletarMedicoUI().setVisible(true);
             }
         });
     }

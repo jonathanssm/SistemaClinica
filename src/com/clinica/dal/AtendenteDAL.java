@@ -190,6 +190,128 @@ public class AtendenteDAL {
 
     }
 
+    public boolean searchAtendente(Atendente a) throws SQLException {
+
+        String sql = "select id_funcionario, cargo from Funcionarios where id_funcionario = ?";
+
+        PreparedStatement ps = con.getPreparedStatement(sql);
+
+        ResultSet rs;
+
+        try {
+
+            ps.setLong(1, a.getCpf());
+
+            rs = ps.executeQuery();
+
+            if (rs.next() && rs.getString(2).equalsIgnoreCase("atendente") && !rs.getString(2).equalsIgnoreCase("gerente") && !rs.getString(2).equals("medico")) {
+                JOptionPane.showMessageDialog(null, "Atendente encontrado");
+                return true;
+            } else {
+                JOptionPane.showMessageDialog(null, "Atendente não foi encontrado");
+                return false;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        } finally {
+            System.out.println("Desconectado");
+            con.getConnection().close();
+        }
+
+        return false;
+    }
+
+    public void update(Atendente a) throws SQLException {
+
+        String sql = "update Funcionarios set rg = ?, nome = ?, data_nasc = ?, email = ?, sexo = ?, carteira_trabalho = ?, pis = ?, salario = ?, cargo = ?, Setores_id_setor = ? where id_funcionario = ?";
+        String sql2 = "update Telefones set celular = ?, fixo = ? where id_telefone = ?";
+        String sql3 = "update Enderecos set endereco = ?, bairro = ?, numero = ?, cep = ? where id_endereco = ?";
+        String sql4 = "update Usuarios set login = ?, senha = ? where id_usuario = ?";
+        String sql5 = "select login from Usuarios where login = ?";
+
+        PreparedStatement stm = con.getPreparedStatement(sql);
+        PreparedStatement ps2 = con.getPreparedStatement(sql2);
+        PreparedStatement ps3 = con.getPreparedStatement(sql3);
+        PreparedStatement ps4 = con.getPreparedStatement(sql4);
+        PreparedStatement ps5 = con.getPreparedStatement(sql5);
+
+        try {
+
+            stm.setString(1, a.getRg());
+            stm.setString(2, a.getNome());
+            stm.setString(3, a.getData_nasc());
+            if (a.getEmail().equals("")) {
+                stm.setString(4, null);
+            } else {
+                stm.setString(4, a.getEmail());
+            }
+            stm.setString(5, a.getSexo());
+            if (a.getCarteiraTrabalho() == 0) {
+                stm.setString(6, null);
+            } else {
+                stm.setInt(6, a.getCarteiraTrabalho());
+            }
+            if (a.getPis() == 0) {
+                stm.setString(7, null);
+            } else {
+                stm.setLong(7, a.getPis());
+            }
+            if (a.getSalario() == 0) {
+                stm.setString(8, null);
+            } else {
+                stm.setDouble(8, a.getSalario());
+            }
+            stm.setString(9, a.getCargo());
+            if (a.getSetor().getId() == 0) {
+                stm.setString(10, null);
+            } else {
+                stm.setInt(10, a.getSetor().getId());
+            }
+            stm.setLong(11, a.getCpf());
+
+            ps2.setString(1, a.getTelefone().getCelular());
+            ps2.setString(2, a.getTelefone().getTelefone());
+            ps2.setLong(3, a.getCpf());
+
+            ps3.setString(1, a.getEndereco().getEndereco());
+            ps3.setString(2, a.getEndereco().getBairro());
+            ps3.setString(3, a.getEndereco().getNumero());
+            ps3.setLong(4, a.getEndereco().getCep());
+            ps3.setLong(5, a.getCpf());
+
+            ps4.setString(1, a.getLogin());
+            ps4.setString(2, a.getSenha());
+            ps4.setLong(3, a.getCpf());
+
+            ps5.setString(1, a.getLogin());
+
+            ResultSet rs = ps5.executeQuery();
+
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "Usuario já existe ou é o usuario atual usado");
+            } else {
+
+                stm.execute();
+                ps2.execute();
+                ps3.execute();
+                ps4.execute();
+                JOptionPane.showMessageDialog(null, "Atendente atualizado");
+                con.commit();
+
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+            System.out.println("rollBack");
+            con.getConnection().rollback();
+        } finally {
+            System.out.println("Desconectado");
+            con.getConnection().close();
+        }
+
+    }
+
     public void PopularJTable(String sql) throws SQLException {
 
         try {
@@ -209,7 +331,7 @@ public class AtendenteDAL {
                     resultado.getString("nome"),
                     resultado.getString("data_nasc"),
                     resultado.getString("sexo")
-                    
+
                 });
             }
         } catch (SQLException ex) {
