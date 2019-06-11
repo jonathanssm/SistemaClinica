@@ -1,4 +1,4 @@
-package com.clinica.test;
+package com.clinica.model;
 
 public class Funcionario {
 	
