@@ -37,6 +37,7 @@ public class GerenteUI extends javax.swing.JFrame {
     private static EditarAtendenteUI ea = new EditarAtendenteUI();
     private static DeletarMedicoUI dm = new DeletarMedicoUI();
     private static DeletarSetorUI ds = new DeletarSetorUI();
+    private static FolhaPagamentoUI fp = new FolhaPagamentoUI();
     
     URL url = this.getClass().getResource("/com/clinica/images/gerente.png");
 
@@ -322,6 +323,11 @@ public class GerenteUI extends javax.swing.JFrame {
         cfolhapagamentoMenu.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         cfolhapagamentoMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/clinica/images/folhaPagamento.png"))); // NOI18N
         cfolhapagamentoMenu.setText("Folha De Pagamento");
+        cfolhapagamentoMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cfolhapagamentoMenuActionPerformed(evt);
+            }
+        });
         menuConsultas.add(cfolhapagamentoMenu);
 
         chistoricofrequenciaMenu.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F, java.awt.event.InputEvent.SHIFT_MASK | java.awt.event.InputEvent.CTRL_MASK));
@@ -522,6 +528,10 @@ public class GerenteUI extends javax.swing.JFrame {
     private void menuDeletarSetorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDeletarSetorActionPerformed
         ds.setVisible(true);
     }//GEN-LAST:event_menuDeletarSetorActionPerformed
+
+    private void cfolhapagamentoMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cfolhapagamentoMenuActionPerformed
+        fp.setVisible(true);
+    }//GEN-LAST:event_cfolhapagamentoMenuActionPerformed
 
     /**
      * @param args the command line arguments

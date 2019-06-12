@@ -14,6 +14,7 @@ public class Funcionario {
     private Setor setor;
     private Endereco endereco;
     private Telefone telefone;
+    private FolhaPagamento fp;
 
     private String nome;
     private String rg;
@@ -32,6 +33,7 @@ public class Funcionario {
         this.setor = new Setor();
         this.endereco = new Endereco();
         this.telefone = new Telefone();
+        this.fp = new FolhaPagamento();
     }
 
     public double getSalario() {
@@ -152,6 +154,14 @@ public class Funcionario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public FolhaPagamento getFp() {
+        return fp;
+    }
+
+    public void setFp(FolhaPagamento fp) {
+        this.fp = fp;
     }
 
 }
